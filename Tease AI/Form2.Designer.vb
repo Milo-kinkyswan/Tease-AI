@@ -42,8 +42,8 @@ Partial Class FrmSettings
         Me.Label93 = New System.Windows.Forms.Label()
         Me.TBSafeword = New System.Windows.Forms.TextBox()
         Me.GBGeneralSystem = New System.Windows.Forms.GroupBox()
+        Me.CBAuditStartup = New System.Windows.Forms.CheckBox()
         Me.CBDomDel = New System.Windows.Forms.CheckBox()
-        Me.CBJackInTheBox = New System.Windows.Forms.CheckBox()
         Me.CBSettingsPause = New System.Windows.Forms.CheckBox()
         Me.CBSaveChatlogExit = New System.Windows.Forms.CheckBox()
         Me.CBAutosaveChatlog = New System.Windows.Forms.CheckBox()
@@ -53,7 +53,7 @@ Partial Class FrmSettings
         Me.landscapeCheckBox = New System.Windows.Forms.CheckBox()
         Me.CBBlogImageWindow = New System.Windows.Forms.CheckBox()
         Me.CBSlideshowSubDir = New System.Windows.Forms.CheckBox()
-        Me.PictureBox2 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox2 = New Tease_AI.PictureBoxEx()
         Me.GroupBox9 = New System.Windows.Forms.GroupBox()
         Me.LBLGeneralSettingsDescription = New System.Windows.Forms.Label()
         Me.GBGeneralSettings = New System.Windows.Forms.GroupBox()
@@ -78,7 +78,7 @@ Partial Class FrmSettings
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.BTNSaveDomSet = New System.Windows.Forms.Button()
         Me.BTNLoadDomSet = New System.Windows.Forms.Button()
-        Me.PictureBox4 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox4 = New Tease_AI.PictureBoxEx()
         Me.GBDomTypingStyle = New System.Windows.Forms.GroupBox()
         Me.CBMeMyMine = New System.Windows.Forms.CheckBox()
         Me.apostropheCheckBox = New System.Windows.Forms.CheckBox()
@@ -211,7 +211,7 @@ Partial Class FrmSettings
         Me.LBLAvgEdgeStroking = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
-        Me.PictureBox12 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox12 = New Tease_AI.PictureBoxEx()
         Me.GroupBox12 = New System.Windows.Forms.GroupBox()
         Me.LBLSubSettingsDescription = New System.Windows.Forms.Label()
         Me.GroupBox32 = New System.Windows.Forms.GroupBox()
@@ -252,7 +252,7 @@ Partial Class FrmSettings
         Me.CLBEndList = New System.Windows.Forms.CheckedListBox()
         Me.GroupBox42 = New System.Windows.Forms.GroupBox()
         Me.RTBScriptDesc = New System.Windows.Forms.RichTextBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New Tease_AI.PictureBoxEx()
         Me.GroupBox43 = New System.Windows.Forms.GroupBox()
         Me.Label98 = New System.Windows.Forms.Label()
         Me.Label104 = New System.Windows.Forms.Label()
@@ -306,7 +306,7 @@ Partial Class FrmSettings
         Me.CBIMaledom = New System.Windows.Forms.CheckBox()
         Me.GroupBox14 = New System.Windows.Forms.GroupBox()
         Me.URLFileList = New System.Windows.Forms.CheckedListBox()
-        Me.PictureBox13 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox13 = New Tease_AI.PictureBoxEx()
         Me.GroupBox44 = New System.Windows.Forms.GroupBox()
         Me.Label100 = New System.Windows.Forms.Label()
         Me.GroupBox47 = New System.Windows.Forms.GroupBox()
@@ -360,9 +360,9 @@ Partial Class FrmSettings
         Me.CBTagPussy = New System.Windows.Forms.CheckBox()
         Me.BTNTagSave = New System.Windows.Forms.Button()
         Me.BTNTagDir = New System.Windows.Forms.Button()
-        Me.ImageTagPictureBox = New System.Windows.Forms.PictureBox()
+        Me.ImageTagPictureBox = New Tease_AI.PictureBoxEx()
         Me.CBTagFace = New System.Windows.Forms.CheckBox()
-        Me.PictureBox14 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox14 = New Tease_AI.PictureBoxEx()
         Me.Label87 = New System.Windows.Forms.Label()
         Me.TabPage9 = New System.Windows.Forms.TabPage()
         Me.Panel4 = New System.Windows.Forms.Panel()
@@ -479,7 +479,7 @@ Partial Class FrmSettings
         Me.LBLLocalTagCount = New System.Windows.Forms.Label()
         Me.BTNLocalTagSave = New System.Windows.Forms.Button()
         Me.BTNLocalTagDir = New System.Windows.Forms.Button()
-        Me.PictureBox7 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox7 = New Tease_AI.PictureBoxEx()
         Me.Label85 = New System.Windows.Forms.Label()
         Me.TabPage11 = New System.Windows.Forms.TabPage()
         Me.Panel7 = New System.Windows.Forms.Panel()
@@ -493,7 +493,7 @@ Partial Class FrmSettings
         Me.BTNWILiked = New System.Windows.Forms.Button()
         Me.BTNWIRemove = New System.Windows.Forms.Button()
         Me.CBWISaveToDisk = New System.Windows.Forms.CheckBox()
-        Me.PictureBox5 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox5 = New Tease_AI.PictureBoxEx()
         Me.WebImageProgressBar = New System.Windows.Forms.ProgressBar()
         Me.BTNWICreateURL = New System.Windows.Forms.Button()
         Me.LBLWebImageCount = New System.Windows.Forms.Label()
@@ -501,11 +501,11 @@ Partial Class FrmSettings
         Me.BTNWIOpenURL = New System.Windows.Forms.Button()
         Me.BTNWIPrevious = New System.Windows.Forms.Button()
         Me.BTNWINext = New System.Windows.Forms.Button()
-        Me.WebPictureBox = New System.Windows.Forms.PictureBox()
+        Me.WebPictureBox = New Tease_AI.PictureBoxEx()
         Me.Label71 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox6 = New Tease_AI.PictureBoxEx()
         Me.Button24 = New System.Windows.Forms.Button()
         Me.GroupBox25 = New System.Windows.Forms.GroupBox()
         Me.LblVideoGeneralTotalD = New System.Windows.Forms.Label()
@@ -605,7 +605,7 @@ Partial Class FrmSettings
         Me.TBGlitterShortName = New System.Windows.Forms.TextBox()
         Me.CBEgotist = New System.Windows.Forms.CheckBox()
         Me.CBTease = New System.Windows.Forms.CheckBox()
-        Me.GlitterAV = New System.Windows.Forms.PictureBox()
+        Me.GlitterAV = New Tease_AI.PictureBoxEx()
         Me.GBGlitter1 = New System.Windows.Forms.GroupBox()
         Me.BTNGlitter1 = New System.Windows.Forms.Button()
         Me.CB1Custom2 = New System.Windows.Forms.CheckBox()
@@ -619,7 +619,7 @@ Partial Class FrmSettings
         Me.GlitterSlider1 = New System.Windows.Forms.TrackBar()
         Me.CBGlitter1 = New System.Windows.Forms.CheckBox()
         Me.TBGlitter1 = New System.Windows.Forms.TextBox()
-        Me.GlitterAV1 = New System.Windows.Forms.PictureBox()
+        Me.GlitterAV1 = New Tease_AI.PictureBoxEx()
         Me.GBGlitter3 = New System.Windows.Forms.GroupBox()
         Me.BTNGlitter3 = New System.Windows.Forms.Button()
         Me.CB3Custom2 = New System.Windows.Forms.CheckBox()
@@ -633,7 +633,7 @@ Partial Class FrmSettings
         Me.GlitterSlider3 = New System.Windows.Forms.TrackBar()
         Me.CBGlitter3 = New System.Windows.Forms.CheckBox()
         Me.TBGlitter3 = New System.Windows.Forms.TextBox()
-        Me.GlitterAV3 = New System.Windows.Forms.PictureBox()
+        Me.GlitterAV3 = New Tease_AI.PictureBoxEx()
         Me.GBGlitter2 = New System.Windows.Forms.GroupBox()
         Me.BTNGlitter2 = New System.Windows.Forms.Button()
         Me.LBLGlitterNC2 = New System.Windows.Forms.Label()
@@ -647,7 +647,7 @@ Partial Class FrmSettings
         Me.CB2Caring = New System.Windows.Forms.CheckBox()
         Me.CB2Cruel = New System.Windows.Forms.CheckBox()
         Me.CB2Bratty = New System.Windows.Forms.CheckBox()
-        Me.GlitterAV2 = New System.Windows.Forms.PictureBox()
+        Me.GlitterAV2 = New Tease_AI.PictureBoxEx()
         Me.GroupBox26 = New System.Windows.Forms.GroupBox()
         Me.LblGlitterSettingsDescription = New System.Windows.Forms.Label()
         Me.Button19 = New System.Windows.Forms.Button()
@@ -657,45 +657,45 @@ Partial Class FrmSettings
         Me.CBGameSounds = New System.Windows.Forms.CheckBox()
         Me.GroupBox61 = New System.Windows.Forms.GroupBox()
         Me.GN6 = New System.Windows.Forms.TextBox()
-        Me.GP6 = New System.Windows.Forms.PictureBox()
+        Me.GP6 = New Tease_AI.PictureBoxEx()
         Me.GN2 = New System.Windows.Forms.TextBox()
-        Me.GP2 = New System.Windows.Forms.PictureBox()
-        Me.GP5 = New System.Windows.Forms.PictureBox()
+        Me.GP2 = New Tease_AI.PictureBoxEx()
+        Me.GP5 = New Tease_AI.PictureBoxEx()
         Me.GN1 = New System.Windows.Forms.TextBox()
-        Me.GP1 = New System.Windows.Forms.PictureBox()
+        Me.GP1 = New Tease_AI.PictureBoxEx()
         Me.GN5 = New System.Windows.Forms.TextBox()
         Me.GN3 = New System.Windows.Forms.TextBox()
-        Me.GP3 = New System.Windows.Forms.PictureBox()
-        Me.GP4 = New System.Windows.Forms.PictureBox()
+        Me.GP3 = New Tease_AI.PictureBoxEx()
+        Me.GP4 = New Tease_AI.PictureBoxEx()
         Me.GN4 = New System.Windows.Forms.TextBox()
         Me.GroupBox60 = New System.Windows.Forms.GroupBox()
-        Me.CardBack = New System.Windows.Forms.PictureBox()
+        Me.CardBack = New Tease_AI.PictureBoxEx()
         Me.GroupBox58 = New System.Windows.Forms.GroupBox()
         Me.BN6 = New System.Windows.Forms.TextBox()
         Me.BN3 = New System.Windows.Forms.TextBox()
-        Me.BP3 = New System.Windows.Forms.PictureBox()
-        Me.BP6 = New System.Windows.Forms.PictureBox()
+        Me.BP3 = New Tease_AI.PictureBoxEx()
+        Me.BP6 = New Tease_AI.PictureBoxEx()
         Me.BN2 = New System.Windows.Forms.TextBox()
         Me.BN5 = New System.Windows.Forms.TextBox()
-        Me.BP5 = New System.Windows.Forms.PictureBox()
-        Me.BP2 = New System.Windows.Forms.PictureBox()
+        Me.BP5 = New Tease_AI.PictureBoxEx()
+        Me.BP2 = New Tease_AI.PictureBoxEx()
         Me.BN1 = New System.Windows.Forms.TextBox()
         Me.BN4 = New System.Windows.Forms.TextBox()
-        Me.BP4 = New System.Windows.Forms.PictureBox()
-        Me.BP1 = New System.Windows.Forms.PictureBox()
+        Me.BP4 = New Tease_AI.PictureBoxEx()
+        Me.BP1 = New Tease_AI.PictureBoxEx()
         Me.GroupBox59 = New System.Windows.Forms.GroupBox()
         Me.SN6 = New System.Windows.Forms.TextBox()
-        Me.SP6 = New System.Windows.Forms.PictureBox()
+        Me.SP6 = New Tease_AI.PictureBoxEx()
         Me.SN2 = New System.Windows.Forms.TextBox()
-        Me.SP2 = New System.Windows.Forms.PictureBox()
+        Me.SP2 = New Tease_AI.PictureBoxEx()
         Me.SN1 = New System.Windows.Forms.TextBox()
-        Me.SP5 = New System.Windows.Forms.PictureBox()
-        Me.SP1 = New System.Windows.Forms.PictureBox()
+        Me.SP5 = New Tease_AI.PictureBoxEx()
+        Me.SP1 = New Tease_AI.PictureBoxEx()
         Me.SN5 = New System.Windows.Forms.TextBox()
         Me.SN3 = New System.Windows.Forms.TextBox()
         Me.SN4 = New System.Windows.Forms.TextBox()
-        Me.SP3 = New System.Windows.Forms.PictureBox()
-        Me.SP4 = New System.Windows.Forms.PictureBox()
+        Me.SP3 = New Tease_AI.PictureBoxEx()
+        Me.SP4 = New Tease_AI.PictureBoxEx()
         Me.TabPage6 = New System.Windows.Forms.TabPage()
         Me.Panel10 = New System.Windows.Forms.Panel()
         Me.TBWishlistComment = New System.Windows.Forms.TextBox()
@@ -712,12 +712,12 @@ Partial Class FrmSettings
         Me.BTNWishlistCreate = New System.Windows.Forms.Button()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.PNLWishList = New System.Windows.Forms.Panel()
-        Me.WishlistCostSilver = New System.Windows.Forms.PictureBox()
+        Me.WishlistCostSilver = New Tease_AI.PictureBoxEx()
         Me.LBLWishListText = New System.Windows.Forms.Label()
         Me.LBLWishlistCost = New System.Windows.Forms.Label()
-        Me.WishlistCostGold = New System.Windows.Forms.PictureBox()
+        Me.WishlistCostGold = New Tease_AI.PictureBoxEx()
         Me.LBLWishListName = New System.Windows.Forms.Label()
-        Me.WishlistPreview = New System.Windows.Forms.PictureBox()
+        Me.WishlistPreview = New Tease_AI.PictureBoxEx()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.GroupBox10 = New System.Windows.Forms.GroupBox()
@@ -785,7 +785,7 @@ Partial Class FrmSettings
         Me.NBAllowRarely = New System.Windows.Forms.NumericUpDown()
         Me.NBAllowOften = New System.Windows.Forms.NumericUpDown()
         Me.CBRangeOrgasm = New System.Windows.Forms.CheckBox()
-        Me.PictureBox8 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox8 = New Tease_AI.PictureBoxEx()
         Me.GroupBox21 = New System.Windows.Forms.GroupBox()
         Me.LBLRangeSettingsDescription = New System.Windows.Forms.Label()
         Me.Label38 = New System.Windows.Forms.Label()
@@ -840,9 +840,31 @@ Partial Class FrmSettings
         Me.CBGlitModType = New System.Windows.Forms.ComboBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.Label50 = New System.Windows.Forms.Label()
+        Me.TabPage26 = New System.Windows.Forms.TabPage()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.Label123 = New System.Windows.Forms.Label()
+        Me.Label122 = New System.Windows.Forms.Label()
+        Me.Label121 = New System.Windows.Forms.Label()
+        Me.Label120 = New System.Windows.Forms.Label()
+        Me.Label118 = New System.Windows.Forms.Label()
+        Me.ListBox5 = New System.Windows.Forms.ListBox()
+        Me.ListBox4 = New System.Windows.Forms.ListBox()
+        Me.ListBox3 = New System.Windows.Forms.ListBox()
+        Me.ListBox2 = New System.Windows.Forms.ListBox()
+        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.TabPage27 = New System.Windows.Forms.TabPage()
         Me.TabPage25 = New System.Windows.Forms.TabPage()
         Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.MonthCalendar1 = New System.Windows.Forms.MonthCalendar()
+        Me.LBLDateTest = New System.Windows.Forms.Label()
+        Me.Label124 = New System.Windows.Forms.Label()
         Me.GroupBox20 = New System.Windows.Forms.GroupBox()
+        Me.BTNMaintenanceScripts = New System.Windows.Forms.Button()
         Me.BTNMaintenanceValidate = New System.Windows.Forms.Button()
         Me.BTNMaintenanceRefresh = New System.Windows.Forms.Button()
         Me.Label117 = New System.Windows.Forms.Label()
@@ -858,7 +880,7 @@ Partial Class FrmSettings
         Me.TBWebStop = New System.Windows.Forms.TextBox()
         Me.TBWebStart = New System.Windows.Forms.TextBox()
         Me.Label114 = New System.Windows.Forms.Label()
-        Me.PictureBox9 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox9 = New Tease_AI.PictureBoxEx()
         Me.Label148 = New System.Windows.Forms.Label()
         Me.TabPage5 = New System.Windows.Forms.TabPage()
         Me.Panel5 = New System.Windows.Forms.Panel()
@@ -868,7 +890,7 @@ Partial Class FrmSettings
         Me.Label33 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.PictureBox3 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox3 = New Tease_AI.PictureBoxEx()
         Me.Label41 = New System.Windows.Forms.Label()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GetColor = New System.Windows.Forms.ColorDialog()
@@ -882,23 +904,6 @@ Partial Class FrmSettings
         Me.BWRefreshURLFiles = New System.ComponentModel.BackgroundWorker()
         Me.BWValidateLocalFiles = New System.ComponentModel.BackgroundWorker()
         Me.BWCreateURLFiles = New System.ComponentModel.BackgroundWorker()
-        Me.TabPage26 = New System.Windows.Forms.TabPage()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.ListBox2 = New System.Windows.Forms.ListBox()
-        Me.ListBox3 = New System.Windows.Forms.ListBox()
-        Me.ListBox4 = New System.Windows.Forms.ListBox()
-        Me.ListBox5 = New System.Windows.Forms.ListBox()
-        Me.Label118 = New System.Windows.Forms.Label()
-        Me.Label120 = New System.Windows.Forms.Label()
-        Me.Label121 = New System.Windows.Forms.Label()
-        Me.Label122 = New System.Windows.Forms.Label()
-        Me.Label123 = New System.Windows.Forms.Label()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.SettingsPanel.SuspendLayout
         Me.SettingsTabs.SuspendLayout
         Me.TabPage1.SuspendLayout
@@ -1104,6 +1109,7 @@ Partial Class FrmSettings
         Me.GroupBox30.SuspendLayout
         Me.TabPage15.SuspendLayout
         Me.GroupBox34.SuspendLayout
+        Me.TabPage26.SuspendLayout
         Me.TabPage25.SuspendLayout
         Me.Panel11.SuspendLayout
         Me.GroupBox20.SuspendLayout
@@ -1112,7 +1118,6 @@ Partial Class FrmSettings
         Me.TabPage5.SuspendLayout
         Me.Panel5.SuspendLayout
         CType(Me.PictureBox3,System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage26.SuspendLayout
         Me.SuspendLayout
         '
         'SettingsPanel
@@ -1351,8 +1356,8 @@ Partial Class FrmSettings
         '
         'GBGeneralSystem
         '
+        Me.GBGeneralSystem.Controls.Add(Me.CBAuditStartup)
         Me.GBGeneralSystem.Controls.Add(Me.CBDomDel)
-        Me.GBGeneralSystem.Controls.Add(Me.CBJackInTheBox)
         Me.GBGeneralSystem.Controls.Add(Me.CBSettingsPause)
         Me.GBGeneralSystem.Controls.Add(Me.CBSaveChatlogExit)
         Me.GBGeneralSystem.Controls.Add(Me.CBAutosaveChatlog)
@@ -1363,11 +1368,23 @@ Partial Class FrmSettings
         Me.GBGeneralSystem.TabStop = false
         Me.GBGeneralSystem.Text = "System"
         '
+        'CBAuditStartup
+        '
+        Me.CBAuditStartup.AutoSize = true
+        Me.CBAuditStartup.ForeColor = System.Drawing.Color.Black
+        Me.CBAuditStartup.Location = New System.Drawing.Point(7, 19)
+        Me.CBAuditStartup.Name = "CBAuditStartup"
+        Me.CBAuditStartup.Size = New System.Drawing.Size(137, 17)
+        Me.CBAuditStartup.TabIndex = 26
+        Me.CBAuditStartup.TabStop = false
+        Me.CBAuditStartup.Text = "Audit Scripts on Startup"
+        Me.CBAuditStartup.UseVisualStyleBackColor = true
+        '
         'CBDomDel
         '
         Me.CBDomDel.AutoSize = true
         Me.CBDomDel.ForeColor = System.Drawing.Color.Black
-        Me.CBDomDel.Location = New System.Drawing.Point(6, 87)
+        Me.CBDomDel.Location = New System.Drawing.Point(7, 110)
         Me.CBDomDel.Name = "CBDomDel"
         Me.CBDomDel.Size = New System.Drawing.Size(197, 17)
         Me.CBDomDel.TabIndex = 27
@@ -1375,23 +1392,11 @@ Partial Class FrmSettings
         Me.CBDomDel.Text = "Allow Domme to Delete Local Media"
         Me.CBDomDel.UseVisualStyleBackColor = true
         '
-        'CBJackInTheBox
-        '
-        Me.CBJackInTheBox.AutoSize = true
-        Me.CBJackInTheBox.ForeColor = System.Drawing.Color.Black
-        Me.CBJackInTheBox.Location = New System.Drawing.Point(6, 110)
-        Me.CBJackInTheBox.Name = "CBJackInTheBox"
-        Me.CBJackInTheBox.Size = New System.Drawing.Size(162, 17)
-        Me.CBJackInTheBox.TabIndex = 26
-        Me.CBJackInTheBox.TabStop = false
-        Me.CBJackInTheBox.Text = "Allow Jack-in-the-Box Scripts"
-        Me.CBJackInTheBox.UseVisualStyleBackColor = true
-        '
         'CBSettingsPause
         '
         Me.CBSettingsPause.AutoSize = true
         Me.CBSettingsPause.ForeColor = System.Drawing.Color.Black
-        Me.CBSettingsPause.Location = New System.Drawing.Point(6, 18)
+        Me.CBSettingsPause.Location = New System.Drawing.Point(7, 41)
         Me.CBSettingsPause.Name = "CBSettingsPause"
         Me.CBSettingsPause.Size = New System.Drawing.Size(244, 17)
         Me.CBSettingsPause.TabIndex = 22
@@ -1405,7 +1410,7 @@ Partial Class FrmSettings
         Me.CBSaveChatlogExit.Checked = true
         Me.CBSaveChatlogExit.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CBSaveChatlogExit.ForeColor = System.Drawing.Color.Black
-        Me.CBSaveChatlogExit.Location = New System.Drawing.Point(6, 64)
+        Me.CBSaveChatlogExit.Location = New System.Drawing.Point(7, 87)
         Me.CBSaveChatlogExit.Name = "CBSaveChatlogExit"
         Me.CBSaveChatlogExit.Size = New System.Drawing.Size(162, 17)
         Me.CBSaveChatlogExit.TabIndex = 25
@@ -1419,7 +1424,7 @@ Partial Class FrmSettings
         Me.CBAutosaveChatlog.Checked = true
         Me.CBAutosaveChatlog.CheckState = System.Windows.Forms.CheckState.Checked
         Me.CBAutosaveChatlog.ForeColor = System.Drawing.Color.Black
-        Me.CBAutosaveChatlog.Location = New System.Drawing.Point(6, 41)
+        Me.CBAutosaveChatlog.Location = New System.Drawing.Point(7, 64)
         Me.CBAutosaveChatlog.Name = "CBAutosaveChatlog"
         Me.CBAutosaveChatlog.Size = New System.Drawing.Size(110, 17)
         Me.CBAutosaveChatlog.TabIndex = 24
@@ -10545,6 +10550,7 @@ Partial Class FrmSettings
         Me.TabControl2.Controls.Add(Me.TabPage8)
         Me.TabControl2.Controls.Add(Me.TabPage15)
         Me.TabControl2.Controls.Add(Me.TabPage26)
+        Me.TabControl2.Controls.Add(Me.TabPage27)
         Me.TabControl2.Location = New System.Drawing.Point(6, 6)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
@@ -11047,6 +11053,187 @@ Partial Class FrmSettings
         Me.Label50.Text = "Current Domme Personality:"
         Me.Label50.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'TabPage26
+        '
+        Me.TabPage26.BackColor = System.Drawing.Color.LightGray
+        Me.TabPage26.Controls.Add(Me.Button2)
+        Me.TabPage26.Controls.Add(Me.ComboBox1)
+        Me.TabPage26.Controls.Add(Me.TextBox1)
+        Me.TabPage26.Controls.Add(Me.Button1)
+        Me.TabPage26.Controls.Add(Me.RadioButton2)
+        Me.TabPage26.Controls.Add(Me.RadioButton1)
+        Me.TabPage26.Controls.Add(Me.Label123)
+        Me.TabPage26.Controls.Add(Me.Label122)
+        Me.TabPage26.Controls.Add(Me.Label121)
+        Me.TabPage26.Controls.Add(Me.Label120)
+        Me.TabPage26.Controls.Add(Me.Label118)
+        Me.TabPage26.Controls.Add(Me.ListBox5)
+        Me.TabPage26.Controls.Add(Me.ListBox4)
+        Me.TabPage26.Controls.Add(Me.ListBox3)
+        Me.TabPage26.Controls.Add(Me.ListBox2)
+        Me.TabPage26.Controls.Add(Me.ListBox1)
+        Me.TabPage26.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage26.Name = "TabPage26"
+        Me.TabPage26.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage26.Size = New System.Drawing.Size(700, 411)
+        Me.TabPage26.TabIndex = 4
+        Me.TabPage26.Text = "TabPage26"
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(462, 55)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(194, 23)
+        Me.Button2.TabIndex = 187
+        Me.Button2.Text = "Clear"
+        Me.Button2.UseVisualStyleBackColor = true
+        '
+        'ComboBox1
+        '
+        Me.ComboBox1.FormattingEnabled = true
+        Me.ComboBox1.Location = New System.Drawing.Point(462, 28)
+        Me.ComboBox1.Name = "ComboBox1"
+        Me.ComboBox1.Size = New System.Drawing.Size(194, 21)
+        Me.ComboBox1.TabIndex = 186
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(462, 379)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(136, 20)
+        Me.TextBox1.TabIndex = 185
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(604, 378)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(52, 23)
+        Me.Button1.TabIndex = 184
+        Me.Button1.Text = "Save"
+        Me.Button1.UseVisualStyleBackColor = true
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = true
+        Me.RadioButton2.Location = New System.Drawing.Point(229, 382)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(147, 17)
+        Me.RadioButton2.TabIndex = 183
+        Me.RadioButton2.TabStop = true
+        Me.RadioButton2.Text = "Show All Available Scripts"
+        Me.RadioButton2.UseVisualStyleBackColor = true
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = true
+        Me.RadioButton1.Location = New System.Drawing.Point(29, 382)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(146, 17)
+        Me.RadioButton1.TabIndex = 182
+        Me.RadioButton1.TabStop = true
+        Me.RadioButton1.Text = "Only Show Playlist Scripts"
+        Me.RadioButton1.UseVisualStyleBackColor = true
+        '
+        'Label123
+        '
+        Me.Label123.AutoSize = true
+        Me.Label123.Location = New System.Drawing.Point(464, 104)
+        Me.Label123.Name = "Label123"
+        Me.Label123.Size = New System.Drawing.Size(39, 13)
+        Me.Label123.TabIndex = 181
+        Me.Label123.Text = "Playlist"
+        '
+        'Label122
+        '
+        Me.Label122.AutoSize = true
+        Me.Label122.Location = New System.Drawing.Point(226, 104)
+        Me.Label122.Name = "Label122"
+        Me.Label122.Size = New System.Drawing.Size(27, 13)
+        Me.Label122.TabIndex = 180
+        Me.Label122.Text = "Link"
+        '
+        'Label121
+        '
+        Me.Label121.AutoSize = true
+        Me.Label121.Location = New System.Drawing.Point(26, 104)
+        Me.Label121.Name = "Label121"
+        Me.Label121.Size = New System.Drawing.Size(42, 13)
+        Me.Label121.TabIndex = 179
+        Me.Label121.Text = "Module"
+        '
+        'Label120
+        '
+        Me.Label120.AutoSize = true
+        Me.Label120.Location = New System.Drawing.Point(226, 12)
+        Me.Label120.Name = "Label120"
+        Me.Label120.Size = New System.Drawing.Size(26, 13)
+        Me.Label120.TabIndex = 178
+        Me.Label120.Text = "End"
+        '
+        'Label118
+        '
+        Me.Label118.AutoSize = true
+        Me.Label118.Location = New System.Drawing.Point(26, 12)
+        Me.Label118.Name = "Label118"
+        Me.Label118.Size = New System.Drawing.Size(29, 13)
+        Me.Label118.TabIndex = 177
+        Me.Label118.Text = "Start"
+        '
+        'ListBox5
+        '
+        Me.ListBox5.FormattingEnabled = true
+        Me.ListBox5.Location = New System.Drawing.Point(462, 120)
+        Me.ListBox5.Name = "ListBox5"
+        Me.ListBox5.Size = New System.Drawing.Size(194, 251)
+        Me.ListBox5.Sorted = true
+        Me.ListBox5.TabIndex = 176
+        '
+        'ListBox4
+        '
+        Me.ListBox4.FormattingEnabled = true
+        Me.ListBox4.Location = New System.Drawing.Point(224, 120)
+        Me.ListBox4.Name = "ListBox4"
+        Me.ListBox4.Size = New System.Drawing.Size(194, 251)
+        Me.ListBox4.Sorted = true
+        Me.ListBox4.TabIndex = 175
+        '
+        'ListBox3
+        '
+        Me.ListBox3.FormattingEnabled = true
+        Me.ListBox3.Location = New System.Drawing.Point(224, 28)
+        Me.ListBox3.Name = "ListBox3"
+        Me.ListBox3.Size = New System.Drawing.Size(194, 69)
+        Me.ListBox3.Sorted = true
+        Me.ListBox3.TabIndex = 174
+        '
+        'ListBox2
+        '
+        Me.ListBox2.FormattingEnabled = true
+        Me.ListBox2.Location = New System.Drawing.Point(24, 120)
+        Me.ListBox2.Name = "ListBox2"
+        Me.ListBox2.Size = New System.Drawing.Size(194, 251)
+        Me.ListBox2.Sorted = true
+        Me.ListBox2.TabIndex = 173
+        '
+        'ListBox1
+        '
+        Me.ListBox1.FormattingEnabled = true
+        Me.ListBox1.Location = New System.Drawing.Point(24, 28)
+        Me.ListBox1.Name = "ListBox1"
+        Me.ListBox1.Size = New System.Drawing.Size(194, 69)
+        Me.ListBox1.Sorted = true
+        Me.ListBox1.TabIndex = 172
+        '
+        'TabPage27
+        '
+        Me.TabPage27.BackColor = System.Drawing.Color.LightGray
+        Me.TabPage27.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage27.Name = "TabPage27"
+        Me.TabPage27.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage27.Size = New System.Drawing.Size(700, 411)
+        Me.TabPage27.TabIndex = 5
+        Me.TabPage27.Text = "TabPage27"
+        '
         'TabPage25
         '
         Me.TabPage25.BackColor = System.Drawing.Color.Silver
@@ -11062,6 +11249,9 @@ Partial Class FrmSettings
         '
         Me.Panel11.BackColor = System.Drawing.Color.LightGray
         Me.Panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel11.Controls.Add(Me.MonthCalendar1)
+        Me.Panel11.Controls.Add(Me.LBLDateTest)
+        Me.Panel11.Controls.Add(Me.Label124)
         Me.Panel11.Controls.Add(Me.GroupBox20)
         Me.Panel11.Controls.Add(Me.WebToy)
         Me.Panel11.Controls.Add(Me.GroupBox15)
@@ -11072,8 +11262,34 @@ Partial Class FrmSettings
         Me.Panel11.Size = New System.Drawing.Size(708, 437)
         Me.Panel11.TabIndex = 92
         '
+        'MonthCalendar1
+        '
+        Me.MonthCalendar1.Location = New System.Drawing.Point(447, 83)
+        Me.MonthCalendar1.MaxSelectionCount = 1
+        Me.MonthCalendar1.Name = "MonthCalendar1"
+        Me.MonthCalendar1.TabIndex = 178
+        '
+        'LBLDateTest
+        '
+        Me.LBLDateTest.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.LBLDateTest.Location = New System.Drawing.Point(447, 268)
+        Me.LBLDateTest.Name = "LBLDateTest"
+        Me.LBLDateTest.Size = New System.Drawing.Size(227, 71)
+        Me.LBLDateTest.TabIndex = 177
+        Me.LBLDateTest.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label124
+        '
+        Me.Label124.Location = New System.Drawing.Point(447, 51)
+        Me.Label124.Name = "Label124"
+        Me.Label124.Size = New System.Drawing.Size(227, 23)
+        Me.Label124.TabIndex = 176
+        Me.Label124.Text = "Test Date Comparison"
+        Me.Label124.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
         'GroupBox20
         '
+        Me.GroupBox20.Controls.Add(Me.BTNMaintenanceScripts)
         Me.GroupBox20.Controls.Add(Me.BTNMaintenanceValidate)
         Me.GroupBox20.Controls.Add(Me.BTNMaintenanceRefresh)
         Me.GroupBox20.Controls.Add(Me.Label117)
@@ -11085,10 +11301,19 @@ Partial Class FrmSettings
         Me.GroupBox20.Controls.Add(Me.BTNMaintenanceRebuild)
         Me.GroupBox20.Location = New System.Drawing.Point(6, 32)
         Me.GroupBox20.Name = "GroupBox20"
-        Me.GroupBox20.Size = New System.Drawing.Size(278, 230)
+        Me.GroupBox20.Size = New System.Drawing.Size(408, 230)
         Me.GroupBox20.TabIndex = 174
         Me.GroupBox20.TabStop = false
         Me.GroupBox20.Text = "Maintenance"
+        '
+        'BTNMaintenanceScripts
+        '
+        Me.BTNMaintenanceScripts.Location = New System.Drawing.Point(270, 19)
+        Me.BTNMaintenanceScripts.Name = "BTNMaintenanceScripts"
+        Me.BTNMaintenanceScripts.Size = New System.Drawing.Size(121, 23)
+        Me.BTNMaintenanceScripts.TabIndex = 175
+        Me.BTNMaintenanceScripts.Text = "Audit Scripts"
+        Me.BTNMaintenanceScripts.UseVisualStyleBackColor = true
         '
         'BTNMaintenanceValidate
         '
@@ -11130,7 +11355,7 @@ Partial Class FrmSettings
         '
         Me.PBCurrent.Location = New System.Drawing.Point(15, 156)
         Me.PBCurrent.Name = "PBCurrent"
-        Me.PBCurrent.Size = New System.Drawing.Size(249, 23)
+        Me.PBCurrent.Size = New System.Drawing.Size(376, 23)
         Me.PBCurrent.TabIndex = 4
         '
         'BTNMaintenanceCancel
@@ -11147,7 +11372,7 @@ Partial Class FrmSettings
         '
         Me.PBMaintenance.Location = New System.Drawing.Point(15, 197)
         Me.PBMaintenance.Name = "PBMaintenance"
-        Me.PBMaintenance.Size = New System.Drawing.Size(249, 23)
+        Me.PBMaintenance.Size = New System.Drawing.Size(376, 23)
         Me.PBMaintenance.TabIndex = 2
         '
         'LBLMaintenance
@@ -11155,7 +11380,7 @@ Partial Class FrmSettings
         Me.LBLMaintenance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.LBLMaintenance.Location = New System.Drawing.Point(15, 76)
         Me.LBLMaintenance.Name = "LBLMaintenance"
-        Me.LBLMaintenance.Size = New System.Drawing.Size(249, 61)
+        Me.LBLMaintenance.Size = New System.Drawing.Size(376, 61)
         Me.LBLMaintenance.TabIndex = 1
         Me.LBLMaintenance.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
@@ -11173,7 +11398,7 @@ Partial Class FrmSettings
         Me.WebToy.Location = New System.Drawing.Point(16, 379)
         Me.WebToy.MinimumSize = New System.Drawing.Size(20, 20)
         Me.WebToy.Name = "WebToy"
-        Me.WebToy.Size = New System.Drawing.Size(254, 36)
+        Me.WebToy.Size = New System.Drawing.Size(381, 36)
         Me.WebToy.TabIndex = 172
         '
         'GroupBox15
@@ -11184,7 +11409,7 @@ Partial Class FrmSettings
         Me.GroupBox15.Controls.Add(Me.Label114)
         Me.GroupBox15.Location = New System.Drawing.Point(6, 268)
         Me.GroupBox15.Name = "GroupBox15"
-        Me.GroupBox15.Size = New System.Drawing.Size(278, 159)
+        Me.GroupBox15.Size = New System.Drawing.Size(408, 159)
         Me.GroupBox15.TabIndex = 173
         Me.GroupBox15.TabStop = false
         Me.GroupBox15.Text = "Web-Controlled Sex Toy"
@@ -11202,14 +11427,14 @@ Partial Class FrmSettings
         '
         Me.TBWebStop.Location = New System.Drawing.Point(10, 72)
         Me.TBWebStop.Name = "TBWebStop"
-        Me.TBWebStop.Size = New System.Drawing.Size(254, 20)
+        Me.TBWebStop.Size = New System.Drawing.Size(381, 20)
         Me.TBWebStop.TabIndex = 170
         '
         'TBWebStart
         '
         Me.TBWebStart.Location = New System.Drawing.Point(10, 33)
         Me.TBWebStart.Name = "TBWebStart"
-        Me.TBWebStart.Size = New System.Drawing.Size(254, 20)
+        Me.TBWebStart.Size = New System.Drawing.Size(381, 20)
         Me.TBWebStart.TabIndex = 167
         '
         'Label114
@@ -11398,177 +11623,6 @@ Partial Class FrmSettings
         '
         'BWCreateURLFiles
         '
-        '
-        'TabPage26
-        '
-        Me.TabPage26.BackColor = System.Drawing.Color.LightGray
-        Me.TabPage26.Controls.Add(Me.Button2)
-        Me.TabPage26.Controls.Add(Me.ComboBox1)
-        Me.TabPage26.Controls.Add(Me.TextBox1)
-        Me.TabPage26.Controls.Add(Me.Button1)
-        Me.TabPage26.Controls.Add(Me.RadioButton2)
-        Me.TabPage26.Controls.Add(Me.RadioButton1)
-        Me.TabPage26.Controls.Add(Me.Label123)
-        Me.TabPage26.Controls.Add(Me.Label122)
-        Me.TabPage26.Controls.Add(Me.Label121)
-        Me.TabPage26.Controls.Add(Me.Label120)
-        Me.TabPage26.Controls.Add(Me.Label118)
-        Me.TabPage26.Controls.Add(Me.ListBox5)
-        Me.TabPage26.Controls.Add(Me.ListBox4)
-        Me.TabPage26.Controls.Add(Me.ListBox3)
-        Me.TabPage26.Controls.Add(Me.ListBox2)
-        Me.TabPage26.Controls.Add(Me.ListBox1)
-        Me.TabPage26.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage26.Name = "TabPage26"
-        Me.TabPage26.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage26.Size = New System.Drawing.Size(700, 411)
-        Me.TabPage26.TabIndex = 4
-        Me.TabPage26.Text = "TabPage26"
-        '
-        'ListBox1
-        '
-        Me.ListBox1.FormattingEnabled = true
-        Me.ListBox1.Location = New System.Drawing.Point(24, 28)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(194, 69)
-        Me.ListBox1.Sorted = True
-        Me.ListBox1.TabIndex = 172
-        '
-        'ListBox2
-        '
-        Me.ListBox2.FormattingEnabled = True
-        Me.ListBox2.Location = New System.Drawing.Point(24, 120)
-        Me.ListBox2.Name = "ListBox2"
-        Me.ListBox2.Size = New System.Drawing.Size(194, 251)
-        Me.ListBox2.Sorted = True
-        Me.ListBox2.TabIndex = 173
-        '
-        'ListBox3
-        '
-        Me.ListBox3.FormattingEnabled = True
-        Me.ListBox3.Location = New System.Drawing.Point(224, 28)
-        Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(194, 69)
-        Me.ListBox3.Sorted = True
-        Me.ListBox3.TabIndex = 174
-        '
-        'ListBox4
-        '
-        Me.ListBox4.FormattingEnabled = True
-        Me.ListBox4.Location = New System.Drawing.Point(224, 120)
-        Me.ListBox4.Name = "ListBox4"
-        Me.ListBox4.Size = New System.Drawing.Size(194, 251)
-        Me.ListBox4.Sorted = True
-        Me.ListBox4.TabIndex = 175
-        '
-        'ListBox5
-        '
-        Me.ListBox5.FormattingEnabled = True
-        Me.ListBox5.Location = New System.Drawing.Point(462, 120)
-        Me.ListBox5.Name = "ListBox5"
-        Me.ListBox5.Size = New System.Drawing.Size(194, 251)
-        Me.ListBox5.Sorted = True
-        Me.ListBox5.TabIndex = 176
-        '
-        'Label118
-        '
-        Me.Label118.AutoSize = True
-        Me.Label118.Location = New System.Drawing.Point(26, 12)
-        Me.Label118.Name = "Label118"
-        Me.Label118.Size = New System.Drawing.Size(29, 13)
-        Me.Label118.TabIndex = 177
-        Me.Label118.Text = "Start"
-        '
-        'Label120
-        '
-        Me.Label120.AutoSize = True
-        Me.Label120.Location = New System.Drawing.Point(226, 12)
-        Me.Label120.Name = "Label120"
-        Me.Label120.Size = New System.Drawing.Size(26, 13)
-        Me.Label120.TabIndex = 178
-        Me.Label120.Text = "End"
-        '
-        'Label121
-        '
-        Me.Label121.AutoSize = True
-        Me.Label121.Location = New System.Drawing.Point(26, 104)
-        Me.Label121.Name = "Label121"
-        Me.Label121.Size = New System.Drawing.Size(42, 13)
-        Me.Label121.TabIndex = 179
-        Me.Label121.Text = "Module"
-        '
-        'Label122
-        '
-        Me.Label122.AutoSize = True
-        Me.Label122.Location = New System.Drawing.Point(226, 104)
-        Me.Label122.Name = "Label122"
-        Me.Label122.Size = New System.Drawing.Size(27, 13)
-        Me.Label122.TabIndex = 180
-        Me.Label122.Text = "Link"
-        '
-        'Label123
-        '
-        Me.Label123.AutoSize = True
-        Me.Label123.Location = New System.Drawing.Point(464, 104)
-        Me.Label123.Name = "Label123"
-        Me.Label123.Size = New System.Drawing.Size(39, 13)
-        Me.Label123.TabIndex = 181
-        Me.Label123.Text = "Playlist"
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Location = New System.Drawing.Point(29, 382)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(146, 17)
-        Me.RadioButton1.TabIndex = 182
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Only Show Playlist Scripts"
-        Me.RadioButton1.UseVisualStyleBackColor = True
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(229, 382)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(147, 17)
-        Me.RadioButton2.TabIndex = 183
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Show All Available Scripts"
-        Me.RadioButton2.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(604, 378)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(52, 23)
-        Me.Button1.TabIndex = 184
-        Me.Button1.Text = "Save"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(462, 379)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(136, 20)
-        Me.TextBox1.TabIndex = 185
-        '
-        'ComboBox1
-        '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(462, 28)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(194, 21)
-        Me.ComboBox1.TabIndex = 186
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(462, 55)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(194, 23)
-        Me.Button2.TabIndex = 187
-        Me.Button2.Text = "Clear"
-        Me.Button2.UseVisualStyleBackColor = true
         '
         'FrmSettings
         '
@@ -11844,6 +11898,8 @@ Partial Class FrmSettings
         Me.TabPage15.ResumeLayout(false)
         Me.TabPage15.PerformLayout
         Me.GroupBox34.ResumeLayout(false)
+        Me.TabPage26.ResumeLayout(false)
+        Me.TabPage26.PerformLayout
         Me.TabPage25.ResumeLayout(false)
         Me.Panel11.ResumeLayout(false)
         Me.GroupBox20.ResumeLayout(false)
@@ -11855,8 +11911,6 @@ Partial Class FrmSettings
         Me.Panel5.ResumeLayout(false)
         Me.Panel5.PerformLayout
         CType(Me.PictureBox3,System.ComponentModel.ISupportInitialize).EndInit
-        Me.TabPage26.ResumeLayout(false)
-        Me.TabPage26.PerformLayout
         Me.ResumeLayout(false)
 
 End Sub
@@ -11878,7 +11932,7 @@ End Sub
     Friend WithEvents landscapeCheckBox As System.Windows.Forms.CheckBox
     Friend WithEvents CBBlogImageWindow As System.Windows.Forms.CheckBox
     Friend WithEvents CBSlideshowSubDir As System.Windows.Forms.CheckBox
-    Friend WithEvents PictureBox2 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox2 As PictureBoxEx
     Friend WithEvents GroupBox9 As System.Windows.Forms.GroupBox
     Friend WithEvents LBLGeneralSettingsDescription As System.Windows.Forms.Label
     Friend WithEvents GBGeneralTextToSpeech As System.Windows.Forms.GroupBox
@@ -11892,7 +11946,7 @@ End Sub
     Friend WithEvents Label34 As System.Windows.Forms.Label
     Friend WithEvents TabPage2 As System.Windows.Forms.TabPage
     Friend WithEvents Panel3 As System.Windows.Forms.Panel
-    Friend WithEvents PictureBox4 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox4 As PictureBoxEx
     Friend WithEvents GBDomRanges As System.Windows.Forms.GroupBox
     Friend WithEvents NBDomMoodMax As System.Windows.Forms.NumericUpDown
     Friend WithEvents NBDomMoodMin As System.Windows.Forms.NumericUpDown
@@ -11987,7 +12041,7 @@ End Sub
     Friend WithEvents LBLAvgEdgeStroking As System.Windows.Forms.Label
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents PictureBox12 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox12 As PictureBoxEx
     Friend WithEvents GroupBox12 As System.Windows.Forms.GroupBox
     Friend WithEvents LBLSubSettingsDescription As System.Windows.Forms.Label
     Friend WithEvents GroupBox32 As System.Windows.Forms.GroupBox
@@ -12005,7 +12059,7 @@ End Sub
     Friend WithEvents Label70 As System.Windows.Forms.Label
     Friend WithEvents TabPage7 As System.Windows.Forms.TabPage
     Friend WithEvents Panel8 As System.Windows.Forms.Panel
-    Friend WithEvents PictureBox13 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox13 As PictureBoxEx
     Friend WithEvents Button46 As System.Windows.Forms.Button
     Friend WithEvents GroupBox44 As System.Windows.Forms.GroupBox
     Friend WithEvents Label100 As System.Windows.Forms.Label
@@ -12040,9 +12094,9 @@ End Sub
     Friend WithEvents CBTagPussy As System.Windows.Forms.CheckBox
     Friend WithEvents BTNTagSave As System.Windows.Forms.Button
     Friend WithEvents BTNTagDir As System.Windows.Forms.Button
-    Friend WithEvents ImageTagPictureBox As System.Windows.Forms.PictureBox
+    Friend WithEvents ImageTagPictureBox As PictureBoxEx
     Friend WithEvents CBTagFace As System.Windows.Forms.CheckBox
-    Friend WithEvents PictureBox14 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox14 As PictureBoxEx
     Friend WithEvents Label87 As System.Windows.Forms.Label
     Friend WithEvents TabPage11 As System.Windows.Forms.TabPage
     Friend WithEvents Panel7 As System.Windows.Forms.Panel
@@ -12056,7 +12110,7 @@ End Sub
     Friend WithEvents BTNWILiked As System.Windows.Forms.Button
     Friend WithEvents BTNWIRemove As System.Windows.Forms.Button
     Friend WithEvents CBWISaveToDisk As System.Windows.Forms.CheckBox
-    Friend WithEvents PictureBox5 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox5 As PictureBoxEx
     Friend WithEvents WebImageProgressBar As System.Windows.Forms.ProgressBar
     Friend WithEvents BTNWICreateURL As System.Windows.Forms.Button
     Friend WithEvents LBLWebImageCount As System.Windows.Forms.Label
@@ -12064,11 +12118,11 @@ End Sub
     Friend WithEvents BTNWIOpenURL As System.Windows.Forms.Button
     Friend WithEvents BTNWIPrevious As System.Windows.Forms.Button
     Friend WithEvents BTNWINext As System.Windows.Forms.Button
-    Friend WithEvents WebPictureBox As System.Windows.Forms.PictureBox
+    Friend WithEvents WebPictureBox As PictureBoxEx
     Friend WithEvents Label71 As System.Windows.Forms.Label
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents PictureBox6 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox6 As PictureBoxEx
     Friend WithEvents Button24 As System.Windows.Forms.Button
     Friend WithEvents GroupBox25 As System.Windows.Forms.GroupBox
     Friend WithEvents LblVideoGeneralTotalD As System.Windows.Forms.Label
@@ -12162,7 +12216,7 @@ End Sub
     Friend WithEvents Label51 As System.Windows.Forms.Label
     Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
     Friend WithEvents Panel6 As System.Windows.Forms.Panel
-    Friend WithEvents PictureBox8 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox8 As PictureBoxEx
     Friend WithEvents LBLStf As System.Windows.Forms.Label
     Friend WithEvents Label49 As System.Windows.Forms.Label
     Friend WithEvents SliderSTF As System.Windows.Forms.TrackBar
@@ -12203,7 +12257,7 @@ End Sub
     Friend WithEvents TBGlitterShortName As System.Windows.Forms.TextBox
     Friend WithEvents CBEgotist As System.Windows.Forms.CheckBox
     Friend WithEvents CBTease As System.Windows.Forms.CheckBox
-    Friend WithEvents GlitterAV As System.Windows.Forms.PictureBox
+    Friend WithEvents GlitterAV As PictureBoxEx
     Friend WithEvents GBGlitter1 As System.Windows.Forms.GroupBox
     Friend WithEvents BTNGlitter1 As System.Windows.Forms.Button
     Friend WithEvents CB1Custom2 As System.Windows.Forms.CheckBox
@@ -12217,7 +12271,7 @@ End Sub
     Friend WithEvents GlitterSlider1 As System.Windows.Forms.TrackBar
     Friend WithEvents CBGlitter1 As System.Windows.Forms.CheckBox
     Friend WithEvents TBGlitter1 As System.Windows.Forms.TextBox
-    Friend WithEvents GlitterAV1 As System.Windows.Forms.PictureBox
+    Friend WithEvents GlitterAV1 As PictureBoxEx
     Friend WithEvents Button19 As System.Windows.Forms.Button
     Friend WithEvents GBGlitter3 As System.Windows.Forms.GroupBox
     Friend WithEvents BTNGlitter3 As System.Windows.Forms.Button
@@ -12232,7 +12286,7 @@ End Sub
     Friend WithEvents GlitterSlider3 As System.Windows.Forms.TrackBar
     Friend WithEvents CBGlitter3 As System.Windows.Forms.CheckBox
     Friend WithEvents TBGlitter3 As System.Windows.Forms.TextBox
-    Friend WithEvents GlitterAV3 As System.Windows.Forms.PictureBox
+    Friend WithEvents GlitterAV3 As PictureBoxEx
     Friend WithEvents GBGlitter2 As System.Windows.Forms.GroupBox
     Friend WithEvents BTNGlitter2 As System.Windows.Forms.Button
     Friend WithEvents LBLGlitterNC2 As System.Windows.Forms.Label
@@ -12246,7 +12300,7 @@ End Sub
     Friend WithEvents CB2Caring As System.Windows.Forms.CheckBox
     Friend WithEvents CB2Cruel As System.Windows.Forms.CheckBox
     Friend WithEvents CB2Bratty As System.Windows.Forms.CheckBox
-    Friend WithEvents GlitterAV2 As System.Windows.Forms.PictureBox
+    Friend WithEvents GlitterAV2 As PictureBoxEx
     Friend WithEvents GroupBox26 As System.Windows.Forms.GroupBox
     Friend WithEvents LblGlitterSettingsDescription As System.Windows.Forms.Label
     Friend WithEvents Label62 As System.Windows.Forms.Label
@@ -12393,7 +12447,7 @@ End Sub
     Friend WithEvents TabPage18 As System.Windows.Forms.TabPage
     Friend WithEvents TabPage19 As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox42 As System.Windows.Forms.GroupBox
-    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox1 As PictureBoxEx
     Friend WithEvents GroupBox43 As System.Windows.Forms.GroupBox
     Friend WithEvents Label98 As System.Windows.Forms.Label
     Friend WithEvents Label104 As System.Windows.Forms.Label
@@ -12420,7 +12474,7 @@ End Sub
     Friend WithEvents LBLLocalTagCount As System.Windows.Forms.Label
     Friend WithEvents BTNLocalTagSave As System.Windows.Forms.Button
     Friend WithEvents BTNLocalTagDir As System.Windows.Forms.Button
-    Friend WithEvents PictureBox7 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox7 As PictureBoxEx
     Friend WithEvents Label85 As System.Windows.Forms.Label
     Friend WithEvents CBTagTD As System.Windows.Forms.CheckBox
     Friend WithEvents CBTagBath As System.Windows.Forms.CheckBox
@@ -12552,7 +12606,7 @@ End Sub
     Friend WithEvents Label83 As System.Windows.Forms.Label
     Friend WithEvents BTNSaveDomSet As System.Windows.Forms.Button
     Friend WithEvents BTNLoadDomSet As System.Windows.Forms.Button
-    Friend WithEvents CBJackInTheBox As System.Windows.Forms.CheckBox
+    Friend WithEvents CBAuditStartup As System.Windows.Forms.CheckBox
     Friend WithEvents GroupBox52 As System.Windows.Forms.GroupBox
     Friend WithEvents Label89 As System.Windows.Forms.Label
     Friend WithEvents NBAllowSometimes As System.Windows.Forms.NumericUpDown
@@ -12578,45 +12632,45 @@ End Sub
     Friend WithEvents TabPage23 As System.Windows.Forms.TabPage
     Friend WithEvents GroupBox61 As System.Windows.Forms.GroupBox
     Friend WithEvents GN6 As System.Windows.Forms.TextBox
-    Friend WithEvents GP6 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP6 As PictureBoxEx
     Friend WithEvents GN5 As System.Windows.Forms.TextBox
-    Friend WithEvents GP5 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP5 As PictureBoxEx
     Friend WithEvents GN4 As System.Windows.Forms.TextBox
-    Friend WithEvents GP4 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP4 As PictureBoxEx
     Friend WithEvents GN3 As System.Windows.Forms.TextBox
-    Friend WithEvents GP3 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP3 As PictureBoxEx
     Friend WithEvents GN2 As System.Windows.Forms.TextBox
-    Friend WithEvents GP2 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP2 As PictureBoxEx
     Friend WithEvents GN1 As System.Windows.Forms.TextBox
-    Friend WithEvents GP1 As System.Windows.Forms.PictureBox
+    Friend WithEvents GP1 As PictureBoxEx
     Friend WithEvents GroupBox59 As System.Windows.Forms.GroupBox
     Friend WithEvents SN6 As System.Windows.Forms.TextBox
-    Friend WithEvents SP6 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP6 As PictureBoxEx
     Friend WithEvents SN5 As System.Windows.Forms.TextBox
-    Friend WithEvents SP5 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP5 As PictureBoxEx
     Friend WithEvents SN4 As System.Windows.Forms.TextBox
-    Friend WithEvents SP4 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP4 As PictureBoxEx
     Friend WithEvents SN3 As System.Windows.Forms.TextBox
-    Friend WithEvents SP3 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP3 As PictureBoxEx
     Friend WithEvents SN2 As System.Windows.Forms.TextBox
-    Friend WithEvents SP2 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP2 As PictureBoxEx
     Friend WithEvents SN1 As System.Windows.Forms.TextBox
-    Friend WithEvents SP1 As System.Windows.Forms.PictureBox
+    Friend WithEvents SP1 As PictureBoxEx
     Friend WithEvents GroupBox60 As System.Windows.Forms.GroupBox
     Friend WithEvents GroupBox58 As System.Windows.Forms.GroupBox
     Friend WithEvents BN6 As System.Windows.Forms.TextBox
-    Friend WithEvents BP6 As System.Windows.Forms.PictureBox
+    Friend WithEvents BP6 As PictureBoxEx
     Friend WithEvents BN5 As System.Windows.Forms.TextBox
-    Friend WithEvents BP5 As System.Windows.Forms.PictureBox
+    Friend WithEvents BP5 As PictureBoxEx
     Friend WithEvents BN4 As System.Windows.Forms.TextBox
-    Friend WithEvents BP4 As System.Windows.Forms.PictureBox
+    Friend WithEvents BP4 As PictureBoxEx
     Friend WithEvents BN3 As System.Windows.Forms.TextBox
-    Friend WithEvents BP3 As System.Windows.Forms.PictureBox
+    Friend WithEvents BP3 As PictureBoxEx
     Friend WithEvents BN2 As System.Windows.Forms.TextBox
-    Friend WithEvents BP2 As System.Windows.Forms.PictureBox
+    Friend WithEvents BP2 As PictureBoxEx
     Friend WithEvents BN1 As System.Windows.Forms.TextBox
-    Friend WithEvents BP1 As System.Windows.Forms.PictureBox
-    Friend WithEvents CardBack As System.Windows.Forms.PictureBox
+    Friend WithEvents BP1 As PictureBoxEx
+    Friend WithEvents CardBack As PictureBoxEx
     Friend WithEvents CBGameSounds As System.Windows.Forms.CheckBox
     Friend WithEvents Label53 As System.Windows.Forms.Label
     Friend WithEvents TabPage5 As System.Windows.Forms.TabPage
@@ -12659,7 +12713,7 @@ End Sub
     Friend WithEvents Label112 As System.Windows.Forms.Label
     Friend WithEvents NBNextImageChance As System.Windows.Forms.NumericUpDown
     Friend WithEvents Panel5 As System.Windows.Forms.Panel
-    Friend WithEvents PictureBox3 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox3 As PictureBoxEx
     Friend WithEvents Label33 As System.Windows.Forms.Label
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
@@ -12681,12 +12735,12 @@ End Sub
     Friend WithEvents Label32 As System.Windows.Forms.Label
     Friend WithEvents Label18 As System.Windows.Forms.Label
     Friend WithEvents PNLWishList As System.Windows.Forms.Panel
-    Friend WithEvents WishlistCostSilver As System.Windows.Forms.PictureBox
+    Friend WithEvents WishlistCostSilver As PictureBoxEx
     Friend WithEvents LBLWishListText As System.Windows.Forms.Label
     Friend WithEvents LBLWishlistCost As System.Windows.Forms.Label
-    Friend WithEvents WishlistCostGold As System.Windows.Forms.PictureBox
+    Friend WithEvents WishlistCostGold As PictureBoxEx
     Friend WithEvents LBLWishListName As System.Windows.Forms.Label
-    Friend WithEvents WishlistPreview As System.Windows.Forms.PictureBox
+    Friend WithEvents WishlistPreview As PictureBoxEx
     Friend WithEvents Label107 As System.Windows.Forms.Label
     Friend WithEvents Panel10 As System.Windows.Forms.Panel
     Friend WithEvents Label113 As System.Windows.Forms.Label
@@ -12701,7 +12755,7 @@ End Sub
     Friend WithEvents TBWebStop As System.Windows.Forms.TextBox
     Friend WithEvents Label114 As System.Windows.Forms.Label
     Friend WithEvents TBWebStart As System.Windows.Forms.TextBox
-    Friend WithEvents PictureBox9 As System.Windows.Forms.PictureBox
+    Friend WithEvents PictureBox9 As PictureBoxEx
     Friend WithEvents Label148 As System.Windows.Forms.Label
     Friend WithEvents GroupBox15 As System.Windows.Forms.GroupBox
     Friend WithEvents WebToy As System.Windows.Forms.WebBrowser
@@ -12736,4 +12790,9 @@ End Sub
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
     Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
+    Friend WithEvents TabPage27 As System.Windows.Forms.TabPage
+    Friend WithEvents BTNMaintenanceScripts As System.Windows.Forms.Button
+    Friend WithEvents LBLDateTest As System.Windows.Forms.Label
+    Friend WithEvents Label124 As System.Windows.Forms.Label
+    Friend WithEvents MonthCalendar1 As System.Windows.Forms.MonthCalendar
 End Class

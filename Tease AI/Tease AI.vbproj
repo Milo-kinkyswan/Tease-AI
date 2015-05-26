@@ -97,6 +97,9 @@
     <Import Include="WMPLib" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\PictureBoxEx.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -128,6 +131,12 @@
     <Compile Include="Form5.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Model\ServiceProvider.vb" />
+    <Compile Include="Model\Core.vb" />
+    <Compile Include="Model\Interfaces\IMediaAccess.vb" />
+    <Compile Include="Model\Interfaces\IServiceProvider.vb" />
+    <Compile Include="Model\MediaAccess.vb" />
+    <Compile Include="Model\MediaFolder.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -198,6 +207,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
