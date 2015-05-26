@@ -16,6 +16,8 @@ Imports System.Speech.AudioFormat
 
 'Comment added by kinkyswan to test pull request on GitHub (comment can be removed)
 
+' Comment added to the test the effect of pulling a request into code that's been modified since the pull request was made
+
 
 
 Public Class Form1
@@ -229,10 +231,10 @@ Public Class Form1
 
     Dim LastSuccessfulImage As Integer
     Dim GetFolder As String
-    Dim FileCount As Integer
+    Public FileCount As Integer
     Dim FileCountMax As Integer
-    Private _ImageFileNames As New List(Of String)
-    Private _CurrentImage As Integer = -1
+    Public _ImageFileNames As New List(Of String)
+    Public _CurrentImage As Integer = -1
     Dim WithTeaseImgDir As String
     Public ApproveImage As Integer = 0
     Public WIExit As Boolean
@@ -279,7 +281,7 @@ Public Class Form1
     Dim ReadBlog As String
     Dim ReadBlogRate As String
     Dim SearchImageBlog As Boolean
-    Dim FoundString As String
+    Public FoundString As String
     Public WebImage As String
 
     Public WebImageFile As StreamReader
@@ -301,7 +303,7 @@ Public Class Form1
     Dim LastScriptCountdown As Integer
     Dim LastScript As Boolean
 
-    Dim JustShowedBlogImage As Boolean
+    Public JustShowedBlogImage As Boolean
 
     Public SaidHello As Boolean
 
@@ -337,10 +339,6 @@ Public Class Form1
     Dim AssImage As Boolean
     Dim BoobImage As Boolean
 
-    Public ImageTagDir As New List(Of String)
-    Public LocalImageTagDir As New List(Of String)
-    Public ImageTagCount As Integer
-    Public LocalImageTagCount As Integer
 
     Dim FoundTag As String = "Null"
     Dim TagGarment As String = "NULL"
@@ -391,12 +389,34 @@ Public Class Form1
     Public UpdateList As New List(Of String)
 
     Public GlitterDocument As String
-           
+
+
 
     Private Const DISABLE_SOUNDS As Integer = 21
     Private Const SET_FEATURE_ON_PROCESS As Integer = 2
 
-   
+
+    ' IDs of video medias to be used with IMediaAccess
+    Private Shared VideoHardCore As Guid = New Guid("{80C3D4B1-640F-4BE2-94DD-BA12FC04A6FD}")
+    Private Shared VideoSoftCore As Guid = New Guid("{43370870-09C3-4B5C-8456-84713775094E}")
+    Private Shared VideoLesbian As Guid = New Guid("{3EC1946B-DE0D-4415-B457-4024EC0A373E}")
+    Private Shared VideoBlowjob As Guid = New Guid("{62892770-8E95-43E6-B7F9-1AA691A20DBC}")
+    Private Shared VideoFemdom As Guid = New Guid("{0D844B64-EBEC-4979-9677-EBA9E22493E4}")
+    Private Shared VideoFemsub As Guid = New Guid("{43F2BD51-C7C1-4C50-B7DE-CA32EECD409E}")
+    Private Shared VideoJOI As Guid = New Guid("{66C185B3-088E-4258-B3F0-10445128BE5D}")
+    Private Shared VideoCH As Guid = New Guid("{C5999F5E-B53A-4019-9752-D610CF0176D0}")
+    Private Shared VideoGeneral As Guid = New Guid("{BDD06CA8-4A81-4B4A-89D2-36550FDBDA1E}")
+
+    Private Shared VideoHardCoreD As Guid = New Guid("{AD7EB3E4-D352-4AA8-BD3A-709736FEF16A}")
+    Private Shared VideoSoftCoreD As Guid = New Guid("{CBE01D9E-05F3-4EDE-B18D-1BD68102D7B8}")
+    Private Shared VideoLesbianD As Guid = New Guid("{936E0989-5BCF-4C2F-A72A-B5B5C83FA22C}")
+    Private Shared VideoBlowjobD As Guid = New Guid("{20D07577-2D6A-4DDE-9475-55C3F65158BC}")
+    Private Shared VideoFemdomD As Guid = New Guid("{1CB83E62-EAF4-4AE8-9699-ABFE6086DD0C}")
+    Private Shared VideoFemsubD As Guid = New Guid("{2A69CABD-A9DE-4EFF-BE63-B41BD43823E7}")
+    Private Shared VideoJOID As Guid = New Guid("{E4447545-C333-472A-B46D-CCBF432382A8}")
+    Private Shared VideoCHD As Guid = New Guid("{139E67CA-AE2D-4EDC-A833-308D772C1A09}")
+    Private Shared VideoGeneralD As Guid = New Guid("{F0ACBEED-EEA1-4595-B2AA-25BE5EC9588B}")
+
 
     <DllImport("urlmon.dll")> _
     Public Shared Function CoInternetSetFeatureEnabled( _
@@ -481,9 +501,21 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
 
     Private Sub Form1_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Debug.Print("Initializing Core")
+        Core.Initialize()
+
         Debug.Print("Form Opened")
 
         FormLoading = True
+
+        If My.Settings.OrgasmLockDate = Nothing Then My.Settings.OrgasmLockDate = FormatDateTime(Now, DateFormat.ShortDate)
+        My.Settings.Save()
+        Debug.Print("OrgasmLockDate = " & My.Settings.OrgasmLockDate)
+
+   
+
+
+
 
         If File.Exists(Application.StartupPath & "\System\Metronome") Then My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\System\Metronome")
 
@@ -544,10 +576,10 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
 
         CoInternetSetFeatureEnabled(DISABLE_SOUNDS, SET_FEATURE_ON_PROCESS, True)
 
-    
 
-        If File.Exists(My.Settings.DomAvatarSave) Then domAvatar.Load(My.Settings.DomAvatarSave)
-        If File.Exists(My.Settings.SubAvatarSave) Then subAvatar.Load(My.Settings.SubAvatarSave)
+
+        If File.Exists(My.Settings.DomAvatarSave) Then domAvatar.LoadFromUrl(My.Settings.DomAvatarSave)
+        If File.Exists(My.Settings.SubAvatarSave) Then subAvatar.LoadFromUrl(My.Settings.SubAvatarSave)
 
 
         For Each comboitem As String In My.Settings.RecentSlideshows
@@ -603,6 +635,27 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
         If My.Settings.CBCHD = True Then FrmSettings.CBVideoCHD.Checked = True
         If My.Settings.CBGeneralD = True Then FrmSettings.CBVideoGeneralD.Checked = True
 
+        Dim mediaAccess As IMediaAccess = ServiceProvider.Instance.GetService(Of IMediaAccess)
+        mediaAccess.AddMediaFolder(VideoHardCore, New MediaFolder(Function() FrmSettings.LblVideoHardCore.Text, Function() FrmSettings.CBVideoHardcore.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoSoftCore, New MediaFolder(Function() FrmSettings.LblVideoSoftCore.Text, Function() FrmSettings.CBVideoSoftCore.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoLesbian, New MediaFolder(Function() FrmSettings.LblVideoLesbian.Text, Function() FrmSettings.CBVideoLesbian.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoBlowjob, New MediaFolder(Function() FrmSettings.LblVideoBlowjob.Text, Function() FrmSettings.CBVideoBlowjob.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoFemdom, New MediaFolder(Function() FrmSettings.LblVideoFemdom.Text, Function() FrmSettings.CBVideoFemdom.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoFemsub, New MediaFolder(Function() FrmSettings.LblVideoFemsub.Text, Function() FrmSettings.CBVideoFemsub.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoJOI, New MediaFolder(Function() FrmSettings.LblVideoJOI.Text, Function() FrmSettings.CBVideoJOI.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoCH, New MediaFolder(Function() FrmSettings.LblVideoCH.Text, Function() FrmSettings.CBVideoCH.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoGeneral, New MediaFolder(Function() FrmSettings.LblVideoGeneral.Text, Function() FrmSettings.CBVideoGeneral.Checked, MediaFolder.Videos))
+
+        mediaAccess.AddMediaFolder(VideoHardCoreD, New MediaFolder(Function() FrmSettings.LblVideoHardCoreD.Text, Function() FrmSettings.CBVideoHardcoreD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoSoftCoreD, New MediaFolder(Function() FrmSettings.LblVideoSoftCoreD.Text, Function() FrmSettings.CBVideoSoftCoreD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoLesbianD, New MediaFolder(Function() FrmSettings.LblVideoLesbianD.Text, Function() FrmSettings.CBVideoLesbianD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoBlowjobD, New MediaFolder(Function() FrmSettings.LblVideoBlowjobD.Text, Function() FrmSettings.CBVideoBlowjobD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoFemdomD, New MediaFolder(Function() FrmSettings.LblVideoFemdomD.Text, Function() FrmSettings.CBVideoFemdomD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoFemsubD, New MediaFolder(Function() FrmSettings.LblVideoFemsubD.Text, Function() FrmSettings.CBVideoFemsubD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoJOID, New MediaFolder(Function() FrmSettings.LblVideoJOID.Text, Function() FrmSettings.CBVideoJOID.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoCHD, New MediaFolder(Function() FrmSettings.LblVideoCHD.Text, Function() FrmSettings.CBVideoCHD.Checked, MediaFolder.Videos))
+        mediaAccess.AddMediaFolder(VideoGeneralD, New MediaFolder(Function() FrmSettings.LblVideoGeneralD.Text, Function() FrmSettings.CBVideoGeneralD.Checked, MediaFolder.Videos))
+
         If My.Settings.NBCensorShowMin > 0 Then FrmSettings.NBCensorShowMin.Value = My.Settings.NBCensorShowMin
         If My.Settings.NBCensorShowMax > 0 Then FrmSettings.NBCensorShowMax.Value = My.Settings.NBCensorShowMax
         If My.Settings.NBCensorHideMin > 0 Then FrmSettings.NBCensorHideMin.Value = My.Settings.NBCensorHideMin
@@ -610,12 +663,10 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
 
         If My.Settings.CBCensorConstant = True Then FrmSettings.CBCensorConstant.Checked = True
 
-        If File.Exists(My.Settings.GlitterAV) Then FrmSettings.GlitterAV.Load(My.Settings.GlitterAV)
-        If File.Exists(My.Settings.GlitterAV1) Then FrmSettings.GlitterAV1.Load(My.Settings.GlitterAV1)
-        If File.Exists(My.Settings.GlitterAV2) Then FrmSettings.GlitterAV2.Load(My.Settings.GlitterAV2)
-        If File.Exists(My.Settings.GlitterAV3) Then FrmSettings.GlitterAV3.Load(My.Settings.GlitterAV3)
-
-
+        If File.Exists(My.Settings.GlitterAV) Then FrmSettings.GlitterAV.LoadFromUrl(My.Settings.GlitterAV)
+        If File.Exists(My.Settings.GlitterAV1) Then FrmSettings.GlitterAV1.LoadFromUrl(My.Settings.GlitterAV1)
+        If File.Exists(My.Settings.GlitterAV2) Then FrmSettings.GlitterAV2.LoadFromUrl(My.Settings.GlitterAV2)
+        If File.Exists(My.Settings.GlitterAV3) Then FrmSettings.GlitterAV3.LoadFromUrl(My.Settings.GlitterAV3)
 
         HardCoreVideoTotal()
         SoftcoreVideoTotal()
@@ -929,10 +980,10 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
             FrmSettings.CBImageInfo.Checked = False
         End If
 
-        If My.Settings.CBJackInTheBox = True Then
-            FrmSettings.CBJackInTheBox.Checked = True
+        If My.Settings.AuditStartup = True Then
+            FrmSettings.CBAuditStartup.Checked = True
         Else
-            FrmSettings.CBJackInTheBox.Checked = False
+            FrmSettings.CBAuditStartup.Checked = False
         End If
 
         FrmSettings.domageNumBox.Value = My.Settings.DomAge
@@ -1215,46 +1266,34 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
 
         DommeMood = randomizer.Next(5, 8)
 
-        If File.Exists(Application.StartupPath & "\System\LastOrgasm") Then
-            FrmSettings.LBLLastOrgasm.Text = GetLastOrgasmStamp().ToString("MM.dd.yyyy")
-        Else
-            FrmSettings.LBLLastOrgasm.Text = GetLastOrgasmStamp().ToString("MM.dd.yyyy")
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\LastOrgasm", DateString)
-        End If
 
-        If File.Exists(Application.StartupPath & "\System\LastRuined") Then
-            FrmSettings.LBLLastRuined.Text = GetLastRuinedStamp().ToString("MM.dd.yyyy")
-        Else
-            FrmSettings.LBLLastRuined.Text = GetLastRuinedStamp().ToString("MM.dd.yyyy")
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\LastRuined", DateString)
-        End If
-
-        If DateTime.Now.ToString("MM/dd/yyyy") <> GetLastTimeStamp().ToString("MM/dd/yyyy") Then
-            MessageBox.Show(Me, "You've received 5 Bronze tokens!", "Daily Login Bonus", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            SaveLastSyncTimeStamp()
-            BronzeTokens += 5
-            SaveTokens()
-        Else
-            Debug.Print("CDate = GetLastTimeStamp")
-        End If
-
-        If Not File.Exists(Application.StartupPath & "\System\Wishlist") Then
-            My.Settings.ClearWishlist = False
+        If My.Settings.LastOrgasm = Nothing Then
+            My.Settings.LastOrgasm = FormatDateTime(Now, DateFormat.ShortDate)
             My.Settings.Save()
         End If
 
+        FrmSettings.LBLLastOrgasm.Text = My.Settings.LastOrgasm.ToString()
 
-        Try
-            If DateTime.Now.ToString("MM/dd/yyyy") <> GetLastWishlistStamp().ToString("MM/dd/yyyy") Then
-                Debug.Print("CDate <> GetLastWishlistStamp")
-                My.Settings.ClearWishlist = False
-                My.Settings.Save()
-            End If
-        Catch
-        End Try
+        If My.Settings.LastRuined = Nothing Then
+            My.Settings.LastRuined = FormatDateTime(Now, DateFormat.ShortDate)
+            My.Settings.Save()
+        End If
+
+        FrmSettings.LBLLastRuined.Text = My.Settings.LastRuined.ToString()
+
+        If CompareDates(My.Settings.DateStamp) <> 0 Then
+            MessageBox.Show(Me, "You've received 5 Bronze tokens!", "Daily Login Bonus", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            My.Settings.DateStamp = FormatDateTime(Now, DateFormat.ShortDate)
+            BronzeTokens += 5
+            SaveTokens()
+        End If
 
 
-
+        If CompareDates(My.Settings.WishlistDate) <> 0 Then
+            My.Settings.ClearWishlist = False
+            My.Settings.Save()
+        End If
+     
 
         AvgEdgeStroking = My.Settings.AvgEdgeStroking
         AvgEdgeNoTouch = My.Settings.AvgEdgeNoTouch
@@ -1286,6 +1325,8 @@ ByVal lpstrReturnString As String, ByVal uReturnLength As Integer, ByVal hwndCal
         DomPersonality = FrmSettings.dompersonalityComboBox.Text
 
         FormLoading = False
+
+        Debug.Print("Form1 Loading Finished")
 
     End Sub
 
@@ -1996,8 +2037,9 @@ NoRepeatFiles:
 
 RuinedOrgasm:
 
-                System.IO.File.WriteAllText(Application.StartupPath & "\System\LastRuined", DateString)
-                FrmSettings.LBLLastRuined.Text = DateString
+                My.Settings.LastRuined = FormatDateTime(Now, DateFormat.ShortDate)
+                My.Settings.Save()
+                FrmSettings.LBLLastOrgasm.Text = My.Settings.LastRuined
 
                 If FrmSettings.CBDomOrgasmEnds.Checked = False And OrgasmRuined = True Then
 
@@ -2096,8 +2138,9 @@ AllowedOrgasm:
 
 NoNoCumFiles:
 
-                System.IO.File.WriteAllText(Application.StartupPath & "\System\LastOrgasm", DateString)
-                FrmSettings.LBLLastOrgasm.Text = DateString
+                My.Settings.LastOrgasm = FormatDateTime(Now, DateFormat.ShortDate)
+                My.Settings.Save()
+                FrmSettings.LBLLastOrgasm.Text = My.Settings.LastOrgasm
 
                 If FrmSettings.CBDomOrgasmEnds.Checked = False Then
 
@@ -3159,6 +3202,8 @@ AcceptAnswer:
 
     Public Sub ScriptTimer_Tick(sender As System.Object, e As System.EventArgs) Handles ScriptTimer.Tick
         'If DomTyping = True Then Return
+        If ChatText.IsBusy Then Return
+
         If WaitTimer.Enabled = True Or DomTypeCheck = True Then Return
 
         'Debug.Print("ScriptTimer Substroking = " & SubStroking)
@@ -3178,7 +3223,7 @@ AcceptAnswer:
 
 
 
-                ScriptTick = randomizer.Next(4, 7)
+                ScriptTick = randomizer.Next(5, 8)
 
                 RunFileText()
 
@@ -3738,7 +3783,7 @@ AcceptAnswer:
                 'TempVal = randomizer.Next(0, ImageLine + 1)
                 ''Debug.Print("TempVal = " & TempVal)
 
-                'subAvatar.Load(ImageLines(TempVal))
+                'subAvatar.LoadFromUrl(ImageLines(TempVal))
 
 
                 Dim EmbedImageDoc As New XmlDocument()
@@ -4920,7 +4965,7 @@ NullResponseLine2:
 
             Dim TestCOUnt As Integer = 0
             For Each fi As String In files
-                If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                     TestCOUnt += 1
                     'Debug.Print("fi = " & fi)
                     _ImageFileNames.Add(fi)
@@ -5190,8 +5235,10 @@ TryPrevious:
 
         If FrmSettings.CBSettingsPause.Checked = True And FrmSettings.SettingsPanel.Visible = True Then Return
 
-        If DomTypeCheck = True And StrokeTick < 4 Then Return
-        If chatBox.Text <> "" And StrokeTick < 4 Then Return
+
+        If ChatText.IsBusy Then Return
+        If DomTypeCheck = True And StrokeTick < 5 Then Return
+        If chatBox.Text <> "" And StrokeTick < 5 Then Return
 
 
         StrokeTick -= 1
@@ -5207,9 +5254,10 @@ TryPrevious:
                 FirstRound = False
 
                 StrokeTimer.Stop()
-                StrokeTauntTimer.Stop()
-                DomTask = "@NullResponse"
-                TypingDelayGeneric()
+            StrokeTauntTimer.Stop()
+
+            'DomTask = "@NullResponse"
+            'TypingDelayGeneric()
 
                 If RunningScript = True Then
                     RunFileText()
@@ -5558,157 +5606,17 @@ TryNextWithTease:
 
         Dim random As Random = New Random()
         Dim RandomVideo As String
-        Dim TotalFiles(0 To 0) As String
+        Dim TotalFiles As IEnumerable(Of String)
         Dim ArrayCycle As New Integer
 
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoHardCore.Text) And FrmSettings.CBVideoHardcore.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mov", SearchOption.AllDirectories)
+        Dim mediaAccess As IMediaAccess = ServiceProvider.Instance.GetService(Of IMediaAccess)
 
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoSoftCore.Text) And FrmSettings.CBVideoSoftCore.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoLesbian.Text) And FrmSettings.CBVideoLesbian.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoBlowjob.Text) And FrmSettings.CBVideoBlowjob.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemdom.Text) And FrmSettings.CBVideoFemdom.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemsub.Text) And FrmSettings.CBVideoFemsub.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
+        TotalFiles = mediaAccess.Folders(VideoHardCore).Files
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoSoftCore).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoLesbian).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoBlowjob).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoFemdom).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoFemsub).Files)
 
         If NoSpecialVideo = True Then GoTo SkipSpecial
 
@@ -5718,232 +5626,19 @@ TryNextWithTease:
 
         If RandomizerVideo = True Then GoTo SkipSpecial
 
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoJOI.Text) And FrmSettings.CBVideoJOI.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mov", SearchOption.AllDirectories)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoJOI).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoCH).Files)
 
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoCH.Text) And FrmSettings.CBVideoCH.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
 
 SkipSpecial:
 
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoGeneral.Text) And FrmSettings.CBVideoGeneral.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoHardCoreD.Text) And FrmSettings.CBVideoHardcoreD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoSoftCoreD.Text) And FrmSettings.CBVideoSoftCoreD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoLesbianD.Text) And FrmSettings.CBVideoLesbianD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoBlowjobD.Text) And FrmSettings.CBVideoBlowjobD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemdomD.Text) And FrmSettings.CBVideoFemdomD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemsubD.Text) And FrmSettings.CBVideoFemsubD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoGeneral).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoHardCoreD).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoSoftCoreD).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoLesbianD).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoBlowjobD).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoFemdomD).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoFemsubD).Files)
 
         If NoSpecialVideo = True Then GoTo SkipSpecialD
         If ScriptVideoTeaseFlag = True Then
@@ -5952,85 +5647,17 @@ SkipSpecial:
 
         If RandomizerVideo = True Then GoTo SkipSpecialD
 
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoJOID.Text) And FrmSettings.CBVideoJOID.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mov", SearchOption.AllDirectories)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoJOID).Files)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoCHD).Files)
 
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoCHD.Text) And FrmSettings.CBVideoCHD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mov", SearchOption.AllDirectories)
-
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
 
 SkipSpecialD:
 
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoGeneralD.Text) And FrmSettings.CBVideoGeneralD.Checked = True Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mov", SearchOption.AllDirectories)
+        TotalFiles = TotalFiles.Concat(mediaAccess.Folders(VideoGeneralD).Files)
 
-            ReDim Preserve TotalFiles(TotalFiles.Length + files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
+        Dim totalFilesArray() As String = TotalFiles.ToArray()
 
-            ArrayCycle = -1
-            Do
-                ArrayCycle += 1
-            Loop Until TotalFiles(ArrayCycle) = ""
-
-
-            files.CopyTo(TotalFiles, ArrayCycle)
-            files2.CopyTo(TotalFiles, ArrayCycle + files.Length)
-            files3.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length)
-            files4.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length)
-            files5.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length)
-            files6.CopyTo(TotalFiles, ArrayCycle + files.Length + files2.Length + files3.Length + files4.Length + files5.Length)
-
-        End If
-
-
-        If TotalFiles(0) = "" Then
+        If totalFilesArray.Length = 0 Then
             NoVideo = True
             Return
         End If
@@ -6039,17 +5666,12 @@ SkipSpecialD:
 
 GetAnotherRandomVideo:
 
-        RandomVideo = TotalFiles(random.Next(0, TotalFiles.Length - 1))
+
+
+        RandomVideo = totalFilesArray(random.Next(0, totalFilesArray.Length - 1))
 
         If RandomVideo = "" Then GoTo GetAnotherRandomVideo
 
-        Dim ArrayCheck As Integer
-
-        ArrayCheck = 1
-        Do
-            'Debug.Print(TotalFiles(ArrayCheck) & " " & ArrayCheck)
-            ArrayCheck += 1
-        Loop Until ArrayCheck = TotalFiles.Length
 
         If FrmSettings.CBVideoHardcore.Checked = True And InStr(RandomVideo, FrmSettings.LblVideoHardCore.Text) <> 0 Then VideoType = "Hardcore"
         If FrmSettings.CBVideoSoftCore.Checked = True And InStr(RandomVideo, FrmSettings.LblVideoSoftCore.Text) <> 0 Then VideoType = "Softcore"
@@ -6130,270 +5752,91 @@ GetAnotherRandomVideo:
 
     End Sub
 
-
+    Private Sub VideoTotal(ByVal videoType As Guid, ByVal label As Label)
+        Dim mediaAccess As IMediaAccess = ServiceProvider.Instance.GetService(Of IMediaAccess)
+        Dim TotalFiles As Integer = mediaAccess.Folders(videoType).Files.Count()
+        label.Text = TotalFiles
+        RefreshVideoTotal += TotalFiles
+    End Sub
 
     Public Sub HardCoreVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoHardCore.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoHardCore.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoHardCoreTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoHardCore, FrmSettings.LblVideoHardCoreTotal)
     End Sub
 
     Public Sub SoftcoreVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoSoftCore.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCore.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoSoftCoreTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoSoftCore, FrmSettings.LblVideoSoftCoreTotal)
     End Sub
 
     Public Sub LesbianVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoLesbian.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoLesbian.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoLesbianTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoLesbian, FrmSettings.LblVideoLesbianTotal)
     End Sub
 
     Public Sub BlowjobVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoBlowjob.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjob.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoBlowjobTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoBlowjob, FrmSettings.LblVideoBlowjobTotal)
     End Sub
 
     Public Sub FemdomVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemdom.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemdom.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoFemdomTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoFemdom, FrmSettings.LblVideoFemdomTotal)
     End Sub
 
     Public Sub FemsubVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemsub.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemsub.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoFemsubTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoFemsub, FrmSettings.LblVideoFemsubTotal)
     End Sub
 
     Public Sub JOIVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoJOI.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoJOI.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoJOITotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
-
+        VideoTotal(VideoJOI, FrmSettings.LblVideoJOITotal)
     End Sub
 
     Public Sub CHVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoCH.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoCH.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoCHTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoCH, FrmSettings.LblVideoCHTotal)
     End Sub
 
     Public Sub GeneralVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoGeneral.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoGeneral.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoGeneralTotal.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
-
+        VideoTotal(VideoGeneral, FrmSettings.LblVideoGeneralTotal)
     End Sub
 
 
     Public Sub HardcoreDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoHardCoreD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoHardCoreD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoHardCoreTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoHardCoreD, FrmSettings.LblVideoHardCoreTotalD)
     End Sub
 
 
     Public Sub SoftcoreDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoSoftCoreD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoSoftCoreD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoSoftCoreTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoSoftCoreD, FrmSettings.LblVideoSoftCoreTotalD)
     End Sub
 
 
     Public Sub LesbianDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoLesbianD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoLesbianD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoLesbianTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoLesbianD, FrmSettings.LblVideoLesbianTotalD)
     End Sub
 
 
     Public Sub BlowjobDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoBlowjobD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoBlowjobD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoBlowjobTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoBlowjobD, FrmSettings.LblVideoBlowjobTotalD)
     End Sub
 
     Public Sub FemdomDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemdomD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemdomD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoFemdomTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoFemdomD, FrmSettings.LblVideoFemdomTotalD)
     End Sub
 
 
     Public Sub FemsubDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoFemsubD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoFemsubD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoFemsubTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoFemsubD, FrmSettings.LblVideoFemsubTotalD)
     End Sub
 
 
     Public Sub JOIDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoJOID.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoJOID.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoJOITotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
-
+        VideoTotal(VideoJOID, FrmSettings.LblVideoJOITotalD)
     End Sub
 
 
     Public Sub CHDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoCHD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoCHD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoCHTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
+        VideoTotal(VideoCHD, FrmSettings.LblVideoCHTotalD)
     End Sub
 
 
     Public Sub GeneralDVideoTotal()
-        If My.Computer.FileSystem.DirectoryExists(FrmSettings.LblVideoGeneralD.Text) Then
-            Dim files() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.wmv", SearchOption.AllDirectories)
-            Dim files2() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.avi", SearchOption.AllDirectories)
-            Dim files3() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mp4", SearchOption.AllDirectories)
-            Dim files4() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.m4v", SearchOption.AllDirectories)
-            Dim files5() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mpg", SearchOption.AllDirectories)
-            Dim files6() As String = Directory.GetFiles(FrmSettings.LblVideoGeneralD.Text, "*.mov", SearchOption.AllDirectories)
-            Dim TotalFiles As Integer = (files.Length + files2.Length + files3.Length + files4.Length + files5.Length + files6.Length)
-            FrmSettings.LblVideoGeneralTotalD.Text = TotalFiles
-            RefreshVideoTotal += TotalFiles
-        End If
-
+        VideoTotal(VideoGeneralD, FrmSettings.LblVideoGeneralTotalD)
     End Sub
 
 
@@ -7037,7 +6480,7 @@ StatusUpdateEnd:
             Catch
             End Try
 
-            domAvatar.Load(OpenFileDialog1.FileName)
+            domAvatar.LoadFromUrl(OpenFileDialog1.FileName)
             My.Settings.DomAvatarSave = OpenFileDialog1.FileName
             My.Settings.Save()
         End If
@@ -7051,7 +6494,7 @@ StatusUpdateEnd:
                 GC.Collect()
             Catch
             End Try
-            subAvatar.Load(OpenFileDialog1.FileName)
+            subAvatar.LoadFromUrl(OpenFileDialog1.FileName)
             My.Settings.SubAvatarSave = OpenFileDialog1.FileName
             My.Settings.Save()
         End If
@@ -7060,7 +6503,7 @@ StatusUpdateEnd:
 
     Private Sub UpdatesTimer_Tick(sender As System.Object, e As System.EventArgs) Handles UpdatesTimer.Tick
 
-        Debug.Print("updates tick = " & UpdatesTick)
+        'Debug.Print("updates tick = " & UpdatesTick)
 
         If FrmSettings.CBSettingsPause.Checked = True And FrmSettings.SettingsPanel.Visible = True Then Return
 
@@ -7227,15 +6670,15 @@ StatusUpdateEnd:
 
         Debug.Print("Test")
 
-        If File.Exists(Application.StartupPath & "\System\SetDate") Then
-            Try
-                StringClean = StringClean.Replace("#OrgasmLimitDate", GetSetDateStamp().ToString("MM/dd/yyyy"))
-            Catch
-                StringClean = StringClean.Replace("#OrgasmLimitDate", "later")
-            End Try
+        If My.Settings.OrgasmsLocked = True Then
+            StringClean = StringClean.Replace("#OrgasmLockDate", My.Settings.OrgasmLockDate.Date.ToString())
         Else
-            StringClean = StringClean.Replace("#OrgasmLimitDate", "later")
+            StringClean = StringClean.Replace("#OrgasmLockDate", "later")
         End If
+
+      
+
+
 
         Dim PetNameVal As Integer = randomizer.Next(1, 5)
 
@@ -7727,7 +7170,7 @@ RinseLatherRepeat:
             ImageClean = Application.StartupPath & "\Images\" & ImageS(0)
             ImageClean = ImageClean.Replace("\\", "\")
             Try
-                mainPictureBox.Load(ImageClean)
+                mainPictureBox.LoadFromUrl(ImageClean)
             Catch
                 MessageBox.Show(Me, "\" & ImageS(0) & " was not found in " & Application.StartupPath & "\Images!" & Environment.NewLine & Environment.NewLine & "Please make sure the file exists and that it is spelled correctly in the script.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Hand)
             End Try
@@ -8846,7 +8289,7 @@ OrgasmDecided:
         If StringClean.Contains("@ShowButtImage") Then
             JustShowedBlogImage = True
             GetTnAList()
-            mainPictureBox.Load(AssList(randomizer.Next(0, AssList.Count)))
+            mainPictureBox.LoadFromUrl(AssList(randomizer.Next(0, AssList.Count)))
             ShowImageInfo()
             StringClean = StringClean.Replace("@ShowButtImage", "")
         End If
@@ -8854,7 +8297,7 @@ OrgasmDecided:
         If StringClean.Contains("@ShowBoobsImage") Then
             JustShowedBlogImage = True
             GetTnAList()
-            mainPictureBox.Load(BoobList(randomizer.Next(0, BoobList.Count)))
+            mainPictureBox.LoadFromUrl(BoobList(randomizer.Next(0, BoobList.Count)))
             ShowImageInfo()
             StringClean = StringClean.Replace("@ShowBoobsImage", "")
         End If
@@ -8888,7 +8331,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -8922,7 +8365,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -8957,7 +8400,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -8991,7 +8434,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9025,7 +8468,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9059,7 +8502,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9094,7 +8537,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9128,7 +8571,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9162,7 +8605,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9197,7 +8640,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9231,7 +8674,7 @@ OrgasmDecided:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         PornList.Add(fi)
                     End If
                 Next
@@ -9457,9 +8900,9 @@ OrgasmDecided:
             Dim TagSplit As String() = Split(LocalTagImageList(randomizer.Next(0, LocalTagImageList.Count)))
             FoundString = TagSplit(0) & " "
 
-            If Not FoundString.Contains(".jpg ") Or Not FoundString.Contains(".jpeg ") Or Not FoundString.Contains(".png ") Or Not FoundString.Contains(".bmp ") Or Not FoundString.Contains(".gif ") Then
+            If Not LCase(FoundString).Contains(".jpg ") Or Not LCase(FoundString).Contains(".jpeg ") Or Not LCase(FoundString).Contains(".png ") Or Not LCase(FoundString).Contains(".bmp ") Or Not LCase(FoundString).Contains(".gif ") Then
                 Dim FSLoop As Integer = 1
-                Do Until FoundString.Contains(".jpg ") Or FoundString.Contains(".jpeg ") Or FoundString.Contains(".png ") Or FoundString.Contains(".bmp ") Or FoundString.Contains(".gif ")
+                Do Until LCase(FoundString).Contains(".jpg ") Or LCase(FoundString).Contains(".jpeg ") Or LCase(FoundString).Contains(".png ") Or LCase(FoundString).Contains(".bmp ") Or LCase(FoundString).Contains(".gif ")
                     FoundString = FoundString & TagSplit(FSLoop) & " "
                     FSLoop += 1
                 Loop
@@ -9468,7 +8911,7 @@ OrgasmDecided:
             JustShowedBlogImage = True
 
 
-            mainPictureBox.Load(FoundString)
+            mainPictureBox.LoadFromUrl(FoundString)
             ShowImageInfo()
 
 
@@ -9686,7 +9129,7 @@ OrgasmDecided:
 
             mainPictureBox.BackgroundImage = Nothing
             mainPictureBox.Refresh()
-            mainPictureBox.Load(Application.StartupPath & "\Images\System\Black.jpg")
+            mainPictureBox.LoadFromUrl(Application.StartupPath & "\Images\System\Black.jpg")
 
             If FrmSettings.CBDomDel.Checked = True Then
                 Try
@@ -10248,7 +9691,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@ACup") Then
-                If FrmSettings.boobComboBox.Text <> "A" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "A" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -10267,7 +9710,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@BCup") Then
-                If FrmSettings.boobComboBox.Text <> "B" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "B" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -10286,7 +9729,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@CCup") Then
-                If FrmSettings.boobComboBox.Text <> "C" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "C" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -10305,7 +9748,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@DCup") Then
-                If FrmSettings.boobComboBox.Text <> "D" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "D" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -10324,7 +9767,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@DDCup") Then
-                If FrmSettings.boobComboBox.Text <> "DD" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "DD" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -10343,7 +9786,7 @@ VTSkip:
         Do
             PoundCount -= 1
             If ListClean(PoundCount).Contains("@DDD+Cup") Then
-                If FrmSettings.boobComboBox.Text <> "DDD+" Or Not _ImageFileNames.Contains(mainPictureBox.ImageLocation) Then
+                If FrmSettings.boobComboBox.Text <> "DDD+" Or JustShowedBlogImage = True Then
                     If StrokeFilter = True Then
                         For i As Integer = 0 To StrokeTauntCount - 1
                             ListClean.Remove(ListClean(PoundCount))
@@ -12639,6 +12082,41 @@ VTSkip:
             End If
         Loop Until PoundCount = 0
 
+        PoundCount = PoundLine
+        Do
+            PoundCount -= 1
+            If ListClean(PoundCount).Contains("@CockTorture") Then
+                If FrmSettings.CBCBTCock.Checked = False Then
+                    If StrokeFilter = True Then
+                        For i As Integer = 0 To StrokeTauntCount - 1
+                            ListClean.Remove(ListClean(PoundCount))
+                            PoundLine -= 1
+                        Next
+                    Else
+                        ListClean.Remove(ListClean(PoundCount))
+                        PoundLine -= 1
+                    End If
+                End If
+            End If
+        Loop Until PoundCount = 0
+
+        PoundCount = PoundLine
+        Do
+            PoundCount -= 1
+            If ListClean(PoundCount).Contains("@BallTorture") Then
+                If FrmSettings.CBCBTBalls.Checked = False Then
+                    If StrokeFilter = True Then
+                        For i As Integer = 0 To StrokeTauntCount - 1
+                            ListClean.Remove(ListClean(PoundCount))
+                            PoundLine -= 1
+                        Next
+                    Else
+                        ListClean.Remove(ListClean(PoundCount))
+                        PoundLine -= 1
+                    End If
+                End If
+            End If
+        Loop Until PoundCount = 0
 
         'If File.Exists(Application.StartupPath & "\Images\System\DislikedImageURLs.txt") Then
 
@@ -12686,7 +12164,7 @@ VTSkip:
 
 
 
-        mainPictureBox.Load(FoundString)
+        mainPictureBox.LoadFromUrl(FoundString)
         ShowImageInfo()
         
 
@@ -12732,73 +12210,42 @@ VTSkip:
 
         If FrmSettings.CBBnBLocal.Checked = True Then
             'Debug.Print("CBBnBLocal called")
+           
+            Dim supportedExtensions As String = "*.png,*.jpg,*.gif,*.bmp,*.jpeg"
+            Dim files As String()
+
             If FrmSettings.CBBoobSubDir.Checked = True Then
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.jpg")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.jpeg")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.png")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.bmp")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.gif")
-                    BoobList.Add(foundFile)
-                Next
+                files = Directory.GetFiles(FrmSettings.LBLBoobPath.Text, "*.*", SearchOption.AllDirectories)
             Else
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.jpg")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.jpeg")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.png")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.bmp")
-                    BoobList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLBoobPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.gif")
-                    BoobList.Add(foundFile)
-                Next
+                files = Directory.GetFiles(FrmSettings.LBLBoobPath.Text, "*.*")
             End If
 
+            Array.Sort(files)
+
+            For Each fi As String In files
+                If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
+                    BoobList.Add(fi)
+                End If
+            Next
+
+
+
+
             If FrmSettings.CBButtSubDir.Checked = True Then
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.jpg")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.jpeg")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.png")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.bmp")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchAllSubDirectories, "*.gif")
-                    AssList.Add(foundFile)
-                Next
+                files = Directory.GetFiles(FrmSettings.LBLButtPath.Text, "*.*", SearchOption.AllDirectories)
             Else
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.jpg")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.jpeg")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.png")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.bmp")
-                    AssList.Add(foundFile)
-                Next
-                For Each foundFile As String In My.Computer.FileSystem.GetFiles(FrmSettings.LBLButtPath.Text, FileIO.SearchOption.SearchTopLevelOnly, "*.gif")
-                    AssList.Add(foundFile)
-                Next
+                files = Directory.GetFiles(FrmSettings.LBLButtPath.Text, "*.*")
             End If
+
+            Array.Sort(files)
+
+            For Each fi As String In files
+                If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
+                    AssList.Add(fi)
+                End If
+            Next
+
+
 
         End If
 
@@ -13123,7 +12570,7 @@ AlreadySeen:
         Try
 
             JustShowedBlogImage = True
-            mainPictureBox.Load(FoundString)
+            mainPictureBox.LoadFromUrl(FoundString)
             ShowImageInfo()
 
             If FrmSettings.CBBlogImageWindow.Checked = True Then
@@ -13131,7 +12578,11 @@ AlreadySeen:
                 Do Until Not WebImage.Contains("/")
                     WebImage = WebImage.Remove(0, 1)
                 Loop
-                My.Computer.Network.DownloadFile(FoundString, Application.StartupPath & "\Images\Session Images\" & WebImage)
+                Try
+                    My.Computer.Network.DownloadFile(FoundString, Application.StartupPath & "\Images\Session Images\" & WebImage)
+                Catch
+                    MessageBox.Show(Me, "Failed to save Session Image!", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                End Try
             End If
 
             PictureStrip.Items(0).Enabled = True
@@ -13199,7 +12650,7 @@ AlreadySeen:
                 Array.Sort(files)
 
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         LocalList.Add(fi)
                     End If
                 Next
@@ -13225,14 +12676,14 @@ AlreadySeen:
         PictureStrip.Items(3).Enabled = False
 
 
-        mainPictureBox.Load(FoundString)
+        mainPictureBox.LoadFromUrl(FoundString)
         ShowImageInfo()
-      
+
 
 
     End Sub
 
-   
+
 
     Public Sub RunLinkScript()
 
@@ -13298,7 +12749,7 @@ AlreadySeen:
     Public Sub RunLastScript()
 
         'Debug.Print("RunLastScript() Called")
-        
+
         Dim EndList As New List(Of String)
         EndList.Clear()
 
@@ -13534,15 +12985,16 @@ NoRepeatFiles:
 
 RuinedOrgasm:
 
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\LastRuined", DateString)
-            FrmSettings.LBLLastRuined.Text = DateString
+            My.Settings.LastRuined = FormatDateTime(Now, DateFormat.ShortDate)
+            My.Settings.Save()
+            FrmSettings.LBLLastOrgasm.Text = My.Settings.LastRuined
 
             If FrmSettings.CBDomOrgasmEnds.Checked = False And OrgasmRuined = True Then
 
                 Dim RepeatChance As Integer = randomizer.Next(0, 101)
 
                 If RepeatChance < 8 * FrmSettings.domlevelNumBox.Value Then
-                  
+
                     EdgeTauntTimer.Stop()
                     HoldEdgeTimer.Stop()
                     HoldEdgeTauntTimer.Stop()
@@ -13639,8 +13091,9 @@ AllowedOrgasm:
 NoNoCumFiles:
 
 
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\LastOrgasm", DateString)
-            FrmSettings.LBLLastOrgasm.Text = DateString
+            My.Settings.LastOrgasm = FormatDateTime(Now, DateFormat.ShortDate)
+            My.Settings.Save()
+            FrmSettings.LBLLastOrgasm.Text = My.Settings.LastOrgasm
 
             If FrmSettings.CBDomOrgasmEnds.Checked = False Then
 
@@ -13744,7 +13197,7 @@ NoRepeatOFiles:
 
 
     Private Sub ChatText_DocumentCompleted(sender As Object, e As System.Windows.Forms.WebBrowserDocumentCompletedEventArgs) Handles ChatText.DocumentCompleted
-       ScrollChatDown()
+        ScrollChatDown()
     End Sub
 
     Private Sub WebBrowser1_Navigating(ByVal sender As Object, ByVal e As System.Windows.Forms.WebBrowserNavigatingEventArgs) Handles ChatText.Navigating
@@ -13783,7 +13236,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-        
+
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
         End While
@@ -13805,7 +13258,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-      
+
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
         End While
@@ -13827,7 +13280,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-       
+
 
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
@@ -13850,7 +13303,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-        
+
 
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
@@ -13873,7 +13326,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-     
+
 
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
@@ -13896,7 +13349,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-       
+
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
         End While
@@ -13917,7 +13370,7 @@ NoRepeatOFiles:
 
         TaskRead = New StreamReader(TaskFile)
         TaskLines.Clear()
-      
+
         While TaskRead.Peek <> -1
             TaskLines.Add(TaskRead.ReadLine())
         End While
@@ -14000,7 +13453,7 @@ AtNext:
 
 
 
-        
+
 
 
         Dim TempDate As String
@@ -14266,7 +13719,7 @@ TryNext:
 
 
 
-       
+
 
 
 
@@ -14373,7 +13826,7 @@ TryNext:
         End If
 
         Dim JOIVideoLine As Integer = randomizer.Next(0, JOIVideos.Count)
-   
+
         DomWMP.Visible = True
         DomWMP.stretchToFit = True
 
@@ -14422,7 +13875,7 @@ TryNext:
     End Sub
 
 
-    
+
 
     Private Sub TnAFastSlides_Tick(sender As System.Object, e As System.EventArgs) Handles TnASlides.Tick
 
@@ -14430,14 +13883,14 @@ TryNext:
 
         If TnARandom < 51 Then
 
-            mainPictureBox.Load(BoobList(randomizer.Next(0, BoobList.Count)))
+            mainPictureBox.LoadFromUrl(BoobList(randomizer.Next(0, BoobList.Count)))
             ShowImageInfo()
             BoobImage = True
             AssImage = False
 
         Else
 
-            mainPictureBox.Load(AssList(randomizer.Next(0, AssList.Count)))
+            mainPictureBox.LoadFromUrl(AssList(randomizer.Next(0, AssList.Count)))
             ShowImageInfo()
             BoobImage = False
             AssImage = True
@@ -14457,447 +13910,447 @@ TryNext:
 
         Dim sVar As String
 
-        sVar = "<head>" & vbCrLf & _
-"  <meta content=""text/html; charset=ISO-8859-1""" & vbCrLf & _
-" http-equiv=""content-type"">" & vbCrLf & _
-"  <title>OKay</title>" & vbCrLf & _
-"</head>" & vbCrLf & _
-"<body>" & vbCrLf & _
-"<span style=""font-weight: bold;""><span" & vbCrLf & _
-" style=""color: red;""><big><span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);"">@Chance</span></big><span" & vbCrLf & _
-" style=""color: rgb(51, 51, 255);""><big>X</big><span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);""><big><span" & vbCrLf & _
-" style=""color: rgb(51, 51, 255);"">X</span>( )</big><br>" & vbCrLf & _
-"<span style=""font-weight: bold;""></span></span></span></span></span><span" & vbCrLf & _
-" style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Domme" & vbCrLf & _
-"has <span style=""color: rgb(51, 51, 255);"">XX</span>" & vbCrLf & _
-"percent chance of going to the line in parentheses. Similar to the <span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);"">@Goto( )</span>" & vbCrLf & _
-"&nbsp;Command. For example, <span style=""color: rgb(204, 0, 0);"">@Chance</span></span></span></span></span><span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);""></span><span" & vbCrLf & _
-" style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-" style=""color: rgb(204, 0, 0);""><span style=""color: black;""><span" & vbCrLf & _
+        sVar = "<head>" & vbCrLf &
+"  <meta content=""text/html; charset=ISO-8859-1""" & vbCrLf &
+" http-equiv=""content-type"">" & vbCrLf &
+"  <title>OKay</title>" & vbCrLf &
+"</head>" & vbCrLf &
+"<body>" & vbCrLf &
+"<span style=""font-weight: bold;""><span" & vbCrLf &
+" style=""color: red;""><big><span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);"">@Chance</span></big><span" & vbCrLf &
+" style=""color: rgb(51, 51, 255);""><big>X</big><span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);""><big><span" & vbCrLf &
+" style=""color: rgb(51, 51, 255);"">X</span>( )</big><br>" & vbCrLf &
+"<span style=""font-weight: bold;""></span></span></span></span></span><span" & vbCrLf &
+" style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Domme" & vbCrLf &
+"has <span style=""color: rgb(51, 51, 255);"">XX</span>" & vbCrLf &
+"percent chance of going to the line in parentheses. Similar to the <span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);"">@Goto( )</span>" & vbCrLf &
+"&nbsp;Command. For example, <span style=""color: rgb(204, 0, 0);"">@Chance</span></span></span></span></span><span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);""></span><span" & vbCrLf &
+" style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+" style=""color: rgb(204, 0, 0);""><span style=""color: black;""><span" & vbCrLf &
 " style=""color: rgb(204, 0, 0);"">50(Because I Said So)</span>" & vbCrLf
-        sVar = sVar & "would have a 50% chance of going to the next line in the</span></span></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""> </span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf & _
-        " style=""color: rgb(51, 0, 0);"">script, and 50% chance of" & vbCrLf & _
-        "going to the line (Because I Said So). <span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);"">XX</span> must be a" & vbCrLf & _
-        "2-digit number between 01 and 99.</span><br>" & vbCrLf & _
-        "</span></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "</span></span></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "@CheckFlag</span></big><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><big><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""></span>( )</big></span></span></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf & _
+        sVar = sVar & "would have a 50% chance of going to the next line in the</span></span></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""> </span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf &
+        " style=""color: rgb(51, 0, 0);"">script, and 50% chance of" & vbCrLf &
+        "going to the line (Because I Said So). <span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);"">XX</span> must be a" & vbCrLf &
+        "2-digit number between 01 and 99.</span><br>" & vbCrLf &
+        "</span></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "</span></span></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "@CheckFlag</span></big><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><big><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""></span>( )</big></span></span></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf &
         "program checks to see if the Flag named in parentheses has been" & vbCrLf
-        sVar = sVar & "created, and will go to that line in the script if it has. Similar to" & vbCrLf & _
-        "the <span style=""color: rgb(204, 0, 0);"">@Goto( )</span>" & vbCrLf & _
-        "Command. For example, <span style=""color: rgb(204, 0, 0);"">@CheckFlag(MyFlag1)</span>" & vbCrLf & _
-        "goes to the next line of the script if the flag MyFlag1 does not exist." & vbCrLf & _
-        "and goes to the line (MyFlag1) if it does. Flags are created with the <span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@SetFlag( )</span>" & vbCrLf & _
-        "Command.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "@DislikeBlogImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf & _
-        "program adds the URL address of the most recently displayed blog image" & vbCrLf & _
-        "and adds it to the file ""DislikedImageURLs.txt"" located in" & vbCrLf & _
-        """\Images\System\""<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "</span></span></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@Edge</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
+        sVar = sVar & "created, and will go to that line in the script if it has. Similar to" & vbCrLf &
+        "the <span style=""color: rgb(204, 0, 0);"">@Goto( )</span>" & vbCrLf &
+        "Command. For example, <span style=""color: rgb(204, 0, 0);"">@CheckFlag(MyFlag1)</span>" & vbCrLf &
+        "goes to the next line of the script if the flag MyFlag1 does not exist." & vbCrLf &
+        "and goes to the line (MyFlag1) if it does. Flags are created with the <span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@SetFlag( )</span>" & vbCrLf &
+        "Command.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "@DislikeBlogImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf &
+        "program adds the URL address of the most recently displayed blog image" & vbCrLf &
+        "and adds it to the file ""DislikedImageURLs.txt"" located in" & vbCrLf &
+        """\Images\System\""<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "</span></span></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@Edge</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
         " style=""color: rgb(51, 51, 255);""><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge of orgasm and begin displaying Edge Taunts. Once the sub lets" & vbCrLf & _
-        "the domme know he has reached the edge, the domme will then decide to" & vbCrLf & _
-        "let him stop stroking or hold it. Modules must contain <span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf & _
-        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeHold</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him hold it. Modules" & vbCrLf & _
-        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf & _
-        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge of orgasm and begin displaying Edge Taunts. Once the sub lets" & vbCrLf &
+        "the domme know he has reached the edge, the domme will then decide to" & vbCrLf &
+        "let him stop stroking or hold it. Modules must contain <span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf &
+        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeHold</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him hold it. Modules" & vbCrLf &
+        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf &
+        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
         "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf
-        sVar = sVar & "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeNoHold</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him stop stroking." & vbCrLf & _
-        "Modules must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf & _
-        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeToRuin</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
+        sVar = sVar & "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeNoHold</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him stop stroking." & vbCrLf &
+        "Modules must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf &
+        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeToRuin</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
         "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf
-        sVar = sVar & "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will then decide to let him" & vbCrLf & _
-        "stop stroking or hold it. In either case, the sub will be instructed to" & vbCrLf & _
-        "ruin his orgasm. Modules must contain <span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf & _
-        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinSecret</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will then decide to let him" & vbCrLf & _
-        "stop stroking or hold it. In either case, the sub will be instructed to" & vbCrLf & _
-        "ruin his orgasm. This Command will prevent the domme from letting the" & vbCrLf & _
-        "sub know his orgasm will be ruined during Edge and Hold The Edge" & vbCrLf & _
+        sVar = sVar & "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will then decide to let him" & vbCrLf &
+        "stop stroking or hold it. In either case, the sub will be instructed to" & vbCrLf &
+        "ruin his orgasm. Modules must contain <span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf &
+        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinSecret</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will then decide to let him" & vbCrLf &
+        "stop stroking or hold it. In either case, the sub will be instructed to" & vbCrLf &
+        "ruin his orgasm. This Command will prevent the domme from letting the" & vbCrLf &
+        "sub know his orgasm will be ruined during Edge and Hold The Edge" & vbCrLf &
         "Taunts. Modules must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf
-        sVar = sVar & "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinHold</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him hold it. At some" & vbCrLf & _
-        "point during holding the edge, the sub will be instructed to ruin his" & vbCrLf & _
-        "orgasm. Modules must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf & _
-        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
+        sVar = sVar & "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinHold</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him hold it. At some" & vbCrLf &
+        "point during holding the edge, the sub will be instructed to ruin his" & vbCrLf &
+        "orgasm. Modules must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf &
+        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
         " style=""color: rgb(204, 0, 0);"">@EdgeToRuinHoldSecret</span></big></span></span><br>" & vbCrLf
-        sVar = sVar & "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him hold it. At some" & vbCrLf & _
-        "point during holding the edge, the sub will be instructed to ruin his" & vbCrLf & _
-        "orgasm. </span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command will prevent the domme from letting the sub know his orgasm" & vbCrLf & _
-        "will be ruined during Edge and Hold The Edge Taunts. </span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Modules" & vbCrLf & _
-        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf & _
-        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinNoHold</span></big></span></span><br>" & vbCrLf & _
+        sVar = sVar & "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him hold it. At some" & vbCrLf &
+        "point during holding the edge, the sub will be instructed to ruin his" & vbCrLf &
+        "orgasm. </span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command will prevent the domme from letting the sub know his orgasm" & vbCrLf &
+        "will be ruined during Edge and Hold The Edge Taunts. </span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Modules" & vbCrLf &
+        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf &
+        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinNoHold</span></big></span></span><br>" & vbCrLf &
         "<span style=""color: red;""><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him ruin his" & vbCrLf & _
-        "orgasm.&nbsp;Modules must contain <span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf & _
-        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinNoHoldSecret</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf & _
-        "the edge" & vbCrLf & _
-        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf & _
-        "know he has reached the edge, the domme will make him ruin his" & vbCrLf & _
-        "orgasm.&nbsp;</span></span></span></span><span" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him ruin his" & vbCrLf &
+        "orgasm.&nbsp;Modules must contain <span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StopStroking</span> or" & vbCrLf &
+        "one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@EdgeToRuinNoHoldSecret</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command let's the program now the sub&nbsp;has been told to get to" & vbCrLf &
+        "the edge" & vbCrLf &
+        "of orgasm and begin displaying Edge Taunts. Once the sub lets the domme" & vbCrLf &
+        "know he has reached the edge, the domme will make him ruin his" & vbCrLf &
+        "orgasm.&nbsp;</span></span></span></span><span" & vbCrLf &
         " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span style=""color: black;""></span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command will prevent the domme from letting the sub know his orgasm" & vbCrLf & _
-        "will be ruined during Edge&nbsp;Taunts.</span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Modules" & vbCrLf & _
-        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf & _
-        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;""><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "</span></span></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@LikeBlogImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf & _
-        "program adds the URL address of the most recently displayed blog image" & vbCrLf & _
-        "and adds it to the file ""LikedImageURLs.txt"" located in" & vbCrLf & _
-        """\Images\System\""</span></span></span></span><br>" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span style=""color: black;""></span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command will prevent the domme from letting the sub know his orgasm" & vbCrLf &
+        "will be ruined during Edge&nbsp;Taunts.</span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Modules" & vbCrLf &
+        "must contain <span style=""color: rgb(204, 0, 0);"">@StopStroking</span>" & vbCrLf &
+        "or one of the <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands. <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Commands can be used in any Linear script.</span></span></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;""><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "</span></span></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@LikeBlogImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">The" & vbCrLf &
+        "program adds the URL address of the most recently displayed blog image" & vbCrLf &
+        "and adds it to the file ""LikedImageURLs.txt"" located in" & vbCrLf &
+        """\Images\System\""</span></span></span></span><br>" & vbCrLf &
         "<br>" & vbCrLf
-        sVar = sVar & "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "@ShowBlogImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf & _
-        "a random online image from one of the user's selected URL Files.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "@ShowImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Has" & vbCrLf & _
-        "a 50% chance of diplaying a random online image from one of the user's" & vbCrLf & _
-        "selected URL Files, or a 50% chance of displaying a </span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">random&nbsp;image" & vbCrLf & _
-        "from one of the user's selected Local Image File paths.</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
+        sVar = sVar & "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "@ShowBlogImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf &
+        "a random online image from one of the user's selected URL Files.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "@ShowImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Has" & vbCrLf &
+        "a 50% chance of diplaying a random online image from one of the user's" & vbCrLf &
+        "selected URL Files, or a 50% chance of displaying a </span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">random&nbsp;image" & vbCrLf &
+        "from one of the user's selected Local Image File paths.</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
         " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf
-        sVar = sVar & "@Show</span></big></span></span><span" & vbCrLf & _
-        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">Image[ ]</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf & _
-        "a specific image noted between the brackets, using ""<span" & vbCrLf & _
-        " style=""font-style: italic;"">Tease AI Root Folder</span>\Images\""" & vbCrLf & _
-        "as the starting path.&nbsp; For example, <span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@ShowImage[1885\secrets05.jpg]</span>" & vbCrLf & _
-        "would display the picture secrets05.jpg located in </span></span></span></span><span" & vbCrLf & _
-        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">""<span" & vbCrLf & _
-        " style=""font-style: italic;"">Tease AI Root Folder</span>\Images\1885\""</span></span></span></span>.<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf & _
-        "@ShowLocalImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf & _
-        "a random&nbsp;image from one of the user's selected Local Image" & vbCrLf & _
-        "File paths.</span></span></span></span><br>" & vbCrLf & _
+        sVar = sVar & "@Show</span></big></span></span><span" & vbCrLf &
+        " style=""font-weight: bold;""><span style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">Image[ ]</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf &
+        "a specific image noted between the brackets, using ""<span" & vbCrLf &
+        " style=""font-style: italic;"">Tease AI Root Folder</span>\Images\""" & vbCrLf &
+        "as the starting path.&nbsp; For example, <span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@ShowImage[1885\secrets05.jpg]</span>" & vbCrLf &
+        "would display the picture secrets05.jpg located in </span></span></span></span><span" & vbCrLf &
+        " style=""color: red;""><span style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">""<span" & vbCrLf &
+        " style=""font-style: italic;"">Tease AI Root Folder</span>\Images\1885\""</span></span></span></span>.<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><br>" & vbCrLf &
+        "@ShowLocalImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf &
+        "a random&nbsp;image from one of the user's selected Local Image" & vbCrLf &
+        "File paths.</span></span></span></span><br>" & vbCrLf &
         "<br>" & vbCrLf
-        sVar = sVar & "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@ShowDislikedImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf & _
-        "a random image taken from&nbsp;""DislikedImageURLs.txt"" located in" & vbCrLf & _
-        """\Images\System\""</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@ShowLikedImage</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf & _
-        "a random image taken from&nbsp;""LikedImageURLs.txt"" located in" & vbCrLf & _
-        """\Images\System\""</span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StartStroking</span></big></span></span><br>" & vbCrLf & _
+        sVar = sVar & "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@ShowDislikedImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf &
+        "a random image taken from&nbsp;""DislikedImageURLs.txt"" located in" & vbCrLf &
+        """\Images\System\""</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@ShowLikedImage</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Displays" & vbCrLf &
+        "a random image taken from&nbsp;""LikedImageURLs.txt"" located in" & vbCrLf &
+        """\Images\System\""</span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StartStroking</span></big></span></span><br>" & vbCrLf &
         "<span style=""color: red;""><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Begins" & vbCrLf & _
-        "the Taunt cycle. This lets the program know the sub is stroking and" & vbCrLf & _
-        "allows the domme to start using Stroke Taunts. This command MUST be" & vbCrLf & _
-        "used in the line before every <span style=""color: rgb(204, 0, 0);"">@End</span>" & vbCrLf & _
-        "command in each Start and Link script (unless the tease is being ended" & vbCrLf & _
-        "or an Interrupt is called) <span" & vbCrLf & _
-        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Start and" & vbCrLf & _
-        "Link scripts ONLY.</span></span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StartTaunts</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Begins" & vbCrLf & _
-        "the Taunt cycle when the sub can't stroke.&nbsp;This lets the" & vbCrLf & _
-        "program know to begin the appropriate Taunt cycle. Currently this is" & vbCrLf & _
-        "only used for for the Chastity state, but may encompass other states in" & vbCrLf & _
-        "the future. This command MUST be" & vbCrLf & _
-        "used in the line before every <span style=""color: rgb(204, 0, 0);"">@End</span>" & vbCrLf & _
-        "command in each Chastity Start and Link script (unless the tease is" & vbCrLf & _
-        "being ended or an Interrupt is called) <span" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Begins" & vbCrLf &
+        "the Taunt cycle. This lets the program know the sub is stroking and" & vbCrLf &
+        "allows the domme to start using Stroke Taunts. This command MUST be" & vbCrLf &
+        "used in the line before every <span style=""color: rgb(204, 0, 0);"">@End</span>" & vbCrLf &
+        "command in each Start and Link script (unless the tease is being ended" & vbCrLf &
+        "or an Interrupt is called) <span" & vbCrLf &
+        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Start and" & vbCrLf &
+        "Link scripts ONLY.</span></span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StartTaunts</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Begins" & vbCrLf &
+        "the Taunt cycle when the sub can't stroke.&nbsp;This lets the" & vbCrLf &
+        "program know to begin the appropriate Taunt cycle. Currently this is" & vbCrLf &
+        "only used for for the Chastity state, but may encompass other states in" & vbCrLf &
+        "the future. This command MUST be" & vbCrLf &
+        "used in the line before every <span style=""color: rgb(204, 0, 0);"">@End</span>" & vbCrLf &
+        "command in each Chastity Start and Link script (unless the tease is" & vbCrLf &
+        "being ended or an Interrupt is called) <span" & vbCrLf &
         " style=""font-weight: bold; color: rgb(204, 0, 0);"">Chastity" & vbCrLf
-        sVar = sVar & "Start and Link scripts ONLY.</span></span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StopStroking</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf & _
-        "Command is used in Modules to let the program know that the sub is no" & vbCrLf & _
-        "longer stroking.&nbsp;<span style=""color: rgb(204, 0, 0);""></span>Each" & vbCrLf & _
-        "Module MUST contain this or an <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf & _
-        "Command. <span style=""font-weight: bold; color: rgb(204, 0, 0);"">Module" & vbCrLf & _
-        "scripts ONLY.</span></span></span></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StrokeFaster</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Increases" & vbCrLf & _
-        "the speed the user is stroking by one. This lets the domme know the sub" & vbCrLf & _
-        "is stroking faster, and slightly speeds up the silent metronome. <span" & vbCrLf & _
+        sVar = sVar & "Start and Link scripts ONLY.</span></span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StopStroking</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">This" & vbCrLf &
+        "Command is used in Modules to let the program know that the sub is no" & vbCrLf &
+        "longer stroking.&nbsp;<span style=""color: rgb(204, 0, 0);""></span>Each" & vbCrLf &
+        "Module MUST contain this or an <span style=""color: rgb(204, 0, 0);"">@Edge</span>" & vbCrLf &
+        "Command. <span style=""font-weight: bold; color: rgb(204, 0, 0);"">Module" & vbCrLf &
+        "scripts ONLY.</span></span></span></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StrokeFaster</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Increases" & vbCrLf &
+        "the speed the user is stroking by one. This lets the domme know the sub" & vbCrLf &
+        "is stroking faster, and slightly speeds up the silent metronome. <span" & vbCrLf &
         " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf
-        sVar = sVar & "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf & _
-        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf & _
-        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StrokeFastest</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Increases" & vbCrLf & _
-        "the speed the user is stroking by full value. This lets the domme know" & vbCrLf & _
-        "the sub" & vbCrLf & _
-        "is stroking as fast as possible, and speeds up the silent metronome to" & vbCrLf & _
-        "its highest setting. <span" & vbCrLf & _
-        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf & _
-        "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf & _
-        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf & _
-        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
+        sVar = sVar & "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf &
+        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf &
+        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StrokeFastest</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Increases" & vbCrLf &
+        "the speed the user is stroking by full value. This lets the domme know" & vbCrLf &
+        "the sub" & vbCrLf &
+        "is stroking as fast as possible, and speeds up the silent metronome to" & vbCrLf &
+        "its highest setting. <span" & vbCrLf &
+        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf &
+        "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf &
+        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf &
+        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
         " style=""color: red;""><big><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(204, 0, 0);"">@StrokeSlower</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Decreases" & vbCrLf & _
-        "the speed the user is stroking by one. This lets the domme know the sub" & vbCrLf & _
-        "is stroking slower, and slightly slows down the silent metronome. <span" & vbCrLf & _
-        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf & _
-        "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf & _
-        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf & _
-        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);"">@StrokeSlowest</span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Decreases" & vbCrLf & _
-        "the speed the user is stroking by full value. This lets the domme know" & vbCrLf & _
-        "the sub" & vbCrLf & _
-        "is stroking as slow as possible, and&nbsp; slows down the silent" & vbCrLf & _
-        "metronome to its lowest setting. <span" & vbCrLf & _
-        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(204, 0, 0);"">@StrokeSlower</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Decreases" & vbCrLf &
+        "the speed the user is stroking by one. This lets the domme know the sub" & vbCrLf &
+        "is stroking slower, and slightly slows down the silent metronome. <span" & vbCrLf &
+        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf &
+        "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span" & vbCrLf &
+        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf &
+        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);"">@StrokeSlowest</span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;"">Decreases" & vbCrLf &
+        "the speed the user is stroking by full value. This lets the domme know" & vbCrLf &
+        "the sub" & vbCrLf &
+        "is stroking as slow as possible, and&nbsp; slows down the silent" & vbCrLf &
+        "metronome to its lowest setting. <span" & vbCrLf &
+        " style=""font-weight: bold; color: rgb(204, 0, 0);"">Stroke" & vbCrLf &
         "Taunts&nbsp;</span></span></span></span></span><span" & vbCrLf
-        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span" & vbCrLf & _
-        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf & _
-        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""></span></big></span></span><br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<br>" & vbCrLf & _
-        "<span style=""font-weight: bold;""><span" & vbCrLf & _
-        " style=""color: red;""><big><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""></span></big></span></span><br>" & vbCrLf & _
-        "<span style=""color: red;""><span" & vbCrLf & _
-        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf & _
-        " style=""color: rgb(204, 0, 0);""><span style=""color: black;""><br>" & vbCrLf & _
-        "</span></span></span></span>" & vbCrLf & _
-        "</body>" & vbCrLf & _
+        sVar = sVar & " style=""color: rgb(204, 0, 0);""><span" & vbCrLf &
+        " style=""font-weight: bold;"">ONLY</span><span" & vbCrLf &
+        " style=""font-weight: bold;"">.</span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""></span></big></span></span><br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<br>" & vbCrLf &
+        "<span style=""font-weight: bold;""><span" & vbCrLf &
+        " style=""color: red;""><big><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""></span></big></span></span><br>" & vbCrLf &
+        "<span style=""color: red;""><span" & vbCrLf &
+        " style=""color: rgb(51, 51, 255);""><span" & vbCrLf &
+        " style=""color: rgb(204, 0, 0);""><span style=""color: black;""><br>" & vbCrLf &
+        "</span></span></span></span>" & vbCrLf &
+        "</body>" & vbCrLf &
         "</html>"
 
 
@@ -14912,7 +14365,7 @@ TryNext:
 
 
 
-  
+
 
 
     Private Sub Button36_Click_1(sender As System.Object, e As System.EventArgs)
@@ -14985,7 +14438,7 @@ TryNext:
 
             Dim TestCOUnt As Integer = 0
             For Each fi As String In files
-                If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                     TestCOUnt += 1
                     'Debug.Print("fi = " & fi)
                     _ImageFileNames.Add(fi)
@@ -15155,7 +14608,7 @@ TryNext:
 
                 Dim TestCOUnt As Integer = 0
                 For Each fi As String In files
-                    If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+                    If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                         TestCOUnt += 1
                         'Debug.Print("fi = " & fi)
                         _ImageFileNames.Add(fi)
@@ -15238,7 +14691,7 @@ TryNext:
 
     Public Sub ShowImageInfo()
         'Debug.Print("ShowImageCalled")
-        'Debug.Print(mainPictureBox.ImageLocation)
+
         If FrmSettings.CBImageInfo.Checked = True Then
             Try
                 If JustShowedBlogImage = True Then
@@ -15261,7 +14714,7 @@ TryNext:
         If (DomWMP.playState = WMPLib.WMPPlayState.wmppsStopped) Then
             'Debug.Print("WMP Stopped Called")
 
-            
+
 
 
 
@@ -15300,7 +14753,7 @@ TryNext:
                 AvoidTheEdgeTaunts.Stop()
                 VideoTease = False
                 SubStroking = False
-            
+
 
                 Debug.Print("TempStrokeTauntVal = " & TempStrokeTauntVal)
                 Debug.Print("TempFileText = " & TempFileText)
@@ -15436,7 +14889,7 @@ TryNext:
         ImageClean = Application.StartupPath & "\Images\" & ImageS(0)
         ImageClean = ImageClean.Replace("\\", "\")
         Try
-            mainPictureBox.Load(ImageClean)
+            mainPictureBox.LoadFromUrl(ImageClean)
         Catch
             MessageBox.Show(Me, "\" & ImageS(0) & " was not found in " & Application.StartupPath & "\Images!" & Environment.NewLine & Environment.NewLine & "Please make sure the file exists and that it is spelled correctly in the script.", "Error!", MessageBoxButtons.OK, MessageBoxIcon.Hand)
         End Try
@@ -15476,9 +14929,9 @@ TryNext:
 
     End Sub
 
-   
 
-   
+
+
 
     Private Sub AppPanelGlitter_Paint(sender As System.Object, e As System.Windows.Forms.PaintEventArgs)
 
@@ -15492,10 +14945,10 @@ TryNext:
 
 
 
-    
 
 
- 
+
+
 
     Public Sub SaveExercise()
 
@@ -15529,13 +14982,13 @@ TryNext:
 
     End Sub
 
-    
 
 
 
-    
 
-   
+
+
+
 
     Public Sub RefreshCards()
 
@@ -15556,12 +15009,12 @@ TryNext:
         FrmCardList.GoldN5.Text = FrmSettings.GN5.Text
         FrmCardList.GoldN6.Text = FrmSettings.GN6.Text
 
-        FrmCardList.GoldP1.Load(FrmSettings.GP1.ImageLocation)
-        FrmCardList.GoldP2.Load(FrmSettings.GP2.ImageLocation)
-        FrmCardList.GoldP3.Load(FrmSettings.GP3.ImageLocation)
-        FrmCardList.GoldP4.Load(FrmSettings.GP4.ImageLocation)
-        FrmCardList.GoldP5.Load(FrmSettings.GP5.ImageLocation)
-        FrmCardList.GoldP6.Load(FrmSettings.GP6.ImageLocation)
+        FrmCardList.GoldP1.LoadFromUrl(My.Settings.GP1)
+        FrmCardList.GoldP2.LoadFromUrl(My.Settings.GP2)
+        FrmCardList.GoldP3.LoadFromUrl(My.Settings.GP3)
+        FrmCardList.GoldP4.LoadFromUrl(My.Settings.GP4)
+        FrmCardList.GoldP5.LoadFromUrl(My.Settings.GP5)
+        FrmCardList.GoldP6.LoadFromUrl(My.Settings.GP6)
 
         FrmCardList.SilverN1.Text = FrmSettings.SN1.Text
         FrmCardList.SilverN2.Text = FrmSettings.SN2.Text
@@ -15570,12 +15023,12 @@ TryNext:
         FrmCardList.SilverN5.Text = FrmSettings.SN5.Text
         FrmCardList.SilverN6.Text = FrmSettings.SN6.Text
 
-        FrmCardList.SilverP1.Load(FrmSettings.SP1.ImageLocation)
-        FrmCardList.SilverP2.Load(FrmSettings.SP2.ImageLocation)
-        FrmCardList.SilverP3.Load(FrmSettings.SP3.ImageLocation)
-        FrmCardList.SilverP4.Load(FrmSettings.SP4.ImageLocation)
-        FrmCardList.SilverP5.Load(FrmSettings.SP5.ImageLocation)
-        FrmCardList.SilverP6.Load(FrmSettings.SP6.ImageLocation)
+        FrmCardList.SilverP1.LoadFromUrl(My.Settings.SP1)
+        FrmCardList.SilverP2.LoadFromUrl(My.Settings.SP2)
+        FrmCardList.SilverP3.LoadFromUrl(My.Settings.SP3)
+        FrmCardList.SilverP4.LoadFromUrl(My.Settings.SP4)
+        FrmCardList.SilverP5.LoadFromUrl(My.Settings.SP5)
+        FrmCardList.SilverP6.LoadFromUrl(My.Settings.SP6)
 
         FrmCardList.BronzeN1.Text = FrmSettings.BN1.Text
         FrmCardList.BronzeN2.Text = FrmSettings.BN2.Text
@@ -15584,12 +15037,12 @@ TryNext:
         FrmCardList.BronzeN5.Text = FrmSettings.BN5.Text
         FrmCardList.BronzeN6.Text = FrmSettings.BN6.Text
 
-        FrmCardList.BronzeP1.Load(FrmSettings.BP1.ImageLocation)
-        FrmCardList.BronzeP2.Load(FrmSettings.BP2.ImageLocation)
-        FrmCardList.BronzeP3.Load(FrmSettings.BP3.ImageLocation)
-        FrmCardList.BronzeP4.Load(FrmSettings.BP4.ImageLocation)
-        FrmCardList.BronzeP5.Load(FrmSettings.BP5.ImageLocation)
-        FrmCardList.BronzeP6.Load(FrmSettings.BP6.ImageLocation)
+        FrmCardList.BronzeP1.LoadFromUrl(My.Settings.BP1)
+        FrmCardList.BronzeP2.LoadFromUrl(My.Settings.BP2)
+        FrmCardList.BronzeP3.LoadFromUrl(My.Settings.BP3)
+        FrmCardList.BronzeP4.LoadFromUrl(My.Settings.BP4)
+        FrmCardList.BronzeP5.LoadFromUrl(My.Settings.BP5)
+        FrmCardList.BronzeP6.LoadFromUrl(My.Settings.BP6)
 
 
 
@@ -15618,63 +15071,12 @@ TryNext:
     End Sub
 
 
-    Public Function GetLastTimeStamp() As DateTime
-        Try
-            Dim lsts As String = System.IO.File.ReadAllText(Application.StartupPath & "\System\DateStamp")
-            Return Date.ParseExact(lsts.Trim, "MM-dd-yyyy", CultureInfo.InvariantCulture)
-            Debug.Print(lsts.Trim & " Worked")
-        Catch
-            'Return DateTime.Now
-        End Try
-    End Function
 
-    Public Function GetLastWishlistStamp() As DateTime
-        Try
-            Dim lsts As String = System.IO.File.ReadAllText(Application.StartupPath & "\System\Wishlist")
-            Return Date.ParseExact(lsts.Trim, "MM-dd-yyyy", CultureInfo.InvariantCulture)
-            Debug.Print(lsts.Trim & " Worked")
-        Catch
-            'Return DateTime.Now
-        End Try
-    End Function
 
-    Public Sub SaveLastSyncTimeStamp()
-        Try
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\DateStamp", DateString)
-        Catch
 
-        End Try
-    End Sub
+   
 
-    Public Function GetLastOrgasmStamp() As DateTime
-        Try
-            Dim lsts As String = System.IO.File.ReadAllText(Application.StartupPath & "\System\LastOrgasm")
-            Return Date.ParseExact(lsts.Trim, "MM-dd-yyyy", CultureInfo.InvariantCulture)
-            Debug.Print(lsts.Trim & " Worked")
-        Catch
-            Return DateTime.Now
-        End Try
-    End Function
-
-    Public Function GetLastRuinedStamp() As DateTime
-        Try
-            Dim lsts As String = System.IO.File.ReadAllText(Application.StartupPath & "\System\LastRuined")
-            Return Date.ParseExact(lsts.Trim, "MM-dd-yyyy", CultureInfo.InvariantCulture)
-            Debug.Print(lsts.Trim & " Worked")
-        Catch
-            Return DateTime.Now
-        End Try
-    End Function
-
-    Public Function GetSetDateStamp() As DateTime
-        Try
-            Dim lsts As String = System.IO.File.ReadAllText(Application.StartupPath & "\System\SetDate")
-            Return Date.ParseExact(lsts.Trim, "MM-dd-yyyy", CultureInfo.InvariantCulture)
-            Debug.Print(lsts.Trim & " Worked")
-        Catch
-            Return DateTime.Now
-        End Try
-    End Function
+ 
 
 
 
@@ -16412,7 +15814,7 @@ TryNext:
 
         Dim TestCOUnt As Integer = 0
         For Each fi As String In files
-            If supportedExtensions.Contains(Path.GetExtension(fi)) Then
+            If supportedExtensions.Contains(Path.GetExtension(LCase(fi))) Then
                 TestCOUnt += 1
                 _ImageFileNames.Add(fi)
             End If
@@ -16503,6 +15905,17 @@ TryNext:
         array(0) = Char.ToUpper(array(0))
         Return New String(array)
     End Function
+
+
+
+    Public Function CompareDates(ByVal CheckDate As Date) As Integer
+
+        Dim result As Integer = DateTime.Compare(FormatDateTime(CheckDate, DateFormat.ShortDate), FormatDateTime(Now, DateFormat.ShortDate))
+        Debug.Print("Compare dates: " & FormatDateTime(CheckDate, DateFormat.ShortDate) & " <-> " & FormatDateTime(Now, DateFormat.ShortDate) & " = " & result)
+        Return result
+
+    End Function
+
 
 
 End Class

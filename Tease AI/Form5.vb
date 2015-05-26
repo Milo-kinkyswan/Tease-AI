@@ -4,7 +4,7 @@ Imports System.IO
 
 Public Class frmApps
 
-
+    Dim TImerTick As Integer
 
     Private Sub CLBExercise_DragLeave(sender As Object, e As System.EventArgs) Handles CLBExercise.DoubleClick
         CLBExercise.Items.Remove(CLBExercise.SelectedItem)
@@ -104,17 +104,11 @@ Public Class frmApps
 
 
 
+     
 
 
 
-
-
-        If DateTime.Now.ToString("MM/dd/yyyy") <> Form1.GetLastWishlistStamp().ToString("MM/dd/yyyy") Or Not File.Exists(Application.StartupPath & "\System\Wishlist") Then
-
-            'If CDate(DateString) <> GetLastWishlistStamp() Or Not File.Exists(Application.StartupPath & "\System\Wishlist") Then
-
-            'If CDate(DateString) <> GetLastWishlistStamp() Or Not File.Exists(Application.StartupPath & "\System\Wishlist") Then
-
+        If Form1.CompareDates(My.Settings.WishlistDate) <> 0 Then
 
 
             Dim WishList As New List(Of String)
@@ -132,7 +126,7 @@ Public Class frmApps
             End If
 
             LBLWishlistDom.Text = Form1.domName.Text & "'s Wishlist"
-            LBLWishlistDate.Text = DateTime.Now.ToString("MM/dd/yyyy")
+            LBLWishlistDate.Text = FormatDateTime(Now, DateFormat.ShortDate).ToString()
             WishlistCostGold.Visible = False
             WishlistCostSilver.Visible = False
             LBLWishlistBronze.Text = Form1.BronzeTokens
@@ -140,7 +134,7 @@ Public Class frmApps
             LBLWishlistGold.Text = Form1.GoldTokens
             LBLWishListText.Text = ""
 
-        
+
 
             Dim WishDir As String = WishList(Form1.randomizer.Next(0, WishList.Count))
 
@@ -159,7 +153,7 @@ Public Class frmApps
             My.Settings.WishlistName = LBLWishListName.Text
 
 
-            WishlistPreview.Load(WishList(1))
+            WishlistPreview.LoadFromUrl(WishList(1))
             WishlistPreview.Visible = True
             My.Settings.WishlistPreview = WishList(1)
 
@@ -204,19 +198,23 @@ Public Class frmApps
                 End If
             End If
 
+
+
+            My.Settings.WishlistDate = FormatDateTime(Now, DateFormat.ShortDate)
+
             My.Settings.Save()
 
 
 
-            System.IO.File.WriteAllText(Application.StartupPath & "\System\Wishlist", DateString)
+
 
 
         Else
 
-            'Debug.Print("CDate = GetLastWishlistStamp")
+
 
             LBLWishlistDom.Text = Form1.domName.Text & "'s Wishlist"
-            LBLWishlistDate.Text = DateTime.Now.ToString("MM/dd/yyyy")
+            LBLWishlistDate.Text = FormatDateTime(Now, DateFormat.ShortDate).ToString()
             LBLWishlistBronze.Text = Form1.BronzeTokens
             LBLWishlistSilver.Text = Form1.SilverTokens
             LBLWishlistGold.Text = Form1.GoldTokens
@@ -224,9 +222,9 @@ Public Class frmApps
 
             LBLWishListName.Text = My.Settings.WishlistName
             Try
-                WishlistPreview.Load(My.Settings.WishlistPreview)
+                WishlistPreview.LoadFromUrl(My.Settings.WishlistPreview)
             Catch
-                WishlistPreview.Load(Application.StartupPath & "\Images\System\NoPreview.png")
+                WishlistPreview.LoadFromUrl(Application.StartupPath & "\Images\System\NoPreview.png")
             End Try
 
             If My.Settings.WishlistTokenType = "Silver" Then WishlistCostSilver.Visible = True
@@ -742,11 +740,17 @@ Public Class frmApps
             MessageBox.Show(Me, "Please set all of the pictures in the Apps\Games tab before launching this app!", "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Hand)
             Return
         End If
+        TImerTick = 2
+        Timer1.Start()
+
+        'LoopOk:
+
+        'If TImerTick > 0 Then GoTo Loopok
 
 
-        FrmCardList.Show()
-        Form1.RefreshCards()
-        FrmCardList.InitializeCards()
+        'FrmCardList.Show()
+        ' Form1.RefreshCards()
+        ' FrmCardList.InitializeCards()
     End Sub
 
 
@@ -981,5 +985,16 @@ Public Class frmApps
 
     Private Sub Button17_Click(sender As System.Object, e As System.EventArgs)
         Form1.CreateTaskLetter()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As System.Object, e As System.EventArgs) Handles Timer1.Tick
+        TImerTick -= 1
+        If TImerTick < 1 Then
+            FrmCardList.Show()
+            Form1.RefreshCards()
+            FrmCardList.InitializeCards()
+            Timer1.Stop()
+        End If
+
     End Sub
 End Class
