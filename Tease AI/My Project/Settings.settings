@@ -607,7 +607,7 @@
       <Value Profile="(Default)">No path selected</Value>
     </Setting>
     <Setting Name="IGeneral" Type="System.String" Scope="User">
-      <Value Profile="(Default)">No path selected</Value>
+      <Value Profile="(Default)">C:\Mine\Miscellany\Kink\Pictures</Value>
     </Setting>
     <Setting Name="IHardcoreSD" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -679,7 +679,7 @@
       <Value Profile="(Default)">No path selected</Value>
     </Setting>
     <Setting Name="DomImageDir" Type="System.String" Scope="User">
-      <Value Profile="(Default)">No path selected</Value>
+      <Value Profile="(Default)">C:\Mine\Miscellany\Kink\Pictures</Value>
     </Setting>
     <Setting Name="CBTCock" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
